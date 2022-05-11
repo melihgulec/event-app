@@ -4,10 +4,10 @@ class AppTheme {
   static Color scaffoldBackgroundColor = Color(0xff101113);
   static Color primaryColor = Color(0xfff36f42);
   static Color elevatedButtonPrimaryColor = Color(0xfff36f42);
-  static Color elevatedButtonBorderColor = Color(0xfff36f42);
+  static Color elevatedButtonBorderColor = Colors.transparent;
   static Color elevatedButtonTextColor = Colors.white;
-  static Color appBarBackgroundColor = Color(0xffFEFBE7);
-  static Color appBarForegroundColor = Colors.black;
+  static Color appBarBackgroundColor = Color(0xff101113);
+  static Color appBarForegroundColor = Colors.white;
   static Color bodyTextColor = Colors.white;
   static Color headline3Color = Colors.black;
   static Color iconColor = Color(0xff979797);

@@ -7,6 +7,7 @@ class TextFieldWithIcon extends StatelessWidget {
   IconData prefixIcon;
   Function suffixIconOnPressed;
   bool obscureText;
+  TextEditingController controller;
 
   TextFieldWithIcon({
     Key key,
@@ -14,7 +15,8 @@ class TextFieldWithIcon extends StatelessWidget {
     this.prefixIcon = FontAwesomeIcons.xmark,
     this.suffixIcon = FontAwesomeIcons.xmark,
     this.suffixIconOnPressed,
-    this.obscureText = false
+    this.obscureText = false,
+    this.controller
   }) : super(key: key);
 
   double sizeBoxHeight = 65;
@@ -27,6 +29,7 @@ class TextFieldWithIcon extends StatelessWidget {
       width: double.infinity,
       height: sizeBoxHeight,
       child: TextField(
+        controller: controller,
         obscureText: obscureText,
         style: Theme.of(context).inputDecorationTheme.labelStyle,
         decoration: InputDecoration(

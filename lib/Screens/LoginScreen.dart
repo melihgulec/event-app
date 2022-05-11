@@ -1,5 +1,6 @@
 import 'package:event_app/Components/ButtonWithIcon.dart';
 import 'package:event_app/Components/TextFieldWithIcon.dart';
+import 'package:event_app/Constants/RouteNames.dart';
 import 'package:event_app/Constants/Texts.dart';
 import 'package:event_app/Helpers/SizeConfig.dart';
 import 'package:flutter/material.dart';
@@ -38,10 +39,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   height: SizeConfig.blockSizeVertical * 8,
                   child: Text(
                     Texts.loginHeadText,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 24,
-                    ),
+                    style: Theme.of(context).textTheme.headline5
                   ),
                 ),
                 CreateTextBoxGroup(),
@@ -62,7 +60,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   onPressed: (){
-
+                    Navigator.pushNamed(context, signUpRoute);
                   },
                 )
               ],
@@ -95,14 +93,14 @@ class _LoginScreenState extends State<LoginScreen> {
     return Column(
       children: [
         TextFieldWithIcon(
-          placeholder: "abc@mail.com",
+          placeholder: Texts.mailPlaceholder,
           prefixIcon: FontAwesomeIcons.envelope,
         ),
         SizedBox(
           height: SizeConfig.blockSizeVertical * 4,
         ),
         TextFieldWithIcon(
-          placeholder: "Password",
+          placeholder: Texts.passwordPlaceholder,
           prefixIcon: FontAwesomeIcons.lock,
           suffixIcon: showPassword == false ? FontAwesomeIcons.eye : FontAwesomeIcons.eyeSlash,
           obscureText: showPassword == false ? true : false,
@@ -111,9 +109,6 @@ class _LoginScreenState extends State<LoginScreen> {
               showPassword = !showPassword;
             });
           },
-        ),
-        SizedBox(
-          height: SizeConfig.blockSizeVertical * 3,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

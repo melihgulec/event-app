@@ -6,11 +6,22 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: ElevatedButton(
-          child: Text("Login"),
-          onPressed: (){
-            Navigator.pushNamed(context, loginRoute);
-          },
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ElevatedButton(
+              child: Text("Login"),
+              onPressed: (){
+                Navigator.pushNamed(context, loginRoute);
+              },
+            ),
+            ElevatedButton(
+              child: Text("Sign Up"),
+              onPressed: (){
+                Navigator.pushNamed(context, signUpRoute);
+              },
+            ),
+          ],
         ),
       ),
     );
