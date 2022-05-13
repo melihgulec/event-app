@@ -15,6 +15,7 @@ class CardBase extends StatelessWidget {
   Color descriptionColor;
   Function firstBlurredContainerOnTap;
   Function secondBlurredContainerOnTap;
+  Function cardOnTap;
 
   CardBase({
     Key key,
@@ -30,88 +31,92 @@ class CardBase extends StatelessWidget {
     this.descriptionColor = const Color(0xff3F38DD),
     this.secondBlurredContainerOnTap,
     this.firstBlurredContainerOnTap,
+    this.cardOnTap,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: width,
-      padding: const EdgeInsets.only(left: 10, top: 10, bottom: 20, right: 10),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(18)
-      ),
-      child: Column(
-        children: [
-          Stack(
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(10),
-                child: Image(
-                  width: double.infinity,
-                  height: 180,
-                  image: AssetImage(imagePath),
-                  fit: BoxFit.cover,
+    return InkWell(
+      onTap: cardOnTap,
+      child: Container(
+        width: width,
+        padding: const EdgeInsets.only(left: 10, top: 10, bottom: 20, right: 10),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(18)
+        ),
+        child: Column(
+          children: [
+            Stack(
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: Image(
+                    width: double.infinity,
+                    height: 180,
+                    image: AssetImage(imagePath),
+                    fit: BoxFit.cover,
+                  ),
                 ),
-              ),
-              if (hasFirstBlurredContainer) Positioned(
-                top: 8,
-                  left: 8,
-                  child: BlurredContainer(
-                    onTap: firstBlurredContainerOnTap,
-                    children: firstBlurredContainer,
-                  )
-              ),
-              if(hasSecondBlurredContainer) Positioned(
+                if (hasFirstBlurredContainer) Positioned(
                   top: 8,
-                  right: 8,
-                  child: BlurredContainer(
-                    onTap: secondBlurredContainerOnTap,
-                    children: secondBlurredContainer,
-                  )
-              ),
-            ],
-          ),
-          const SizedBox(height: 15,),
-          SizedBox(
-            width: double.infinity,
-            child: Text(
-              title,
-              style: const TextStyle(
-                color: Colors.black,
-                fontSize: 18,
-                fontWeight: FontWeight.bold
-              ),
-              overflow: TextOverflow.ellipsis,
-            ),
-          ),
-          const SizedBox(height: 15,),
-          SizedBox(
-            width: double.infinity,
-            child: Text(
-              description,
-              style: TextStyle(
-                color: descriptionColor,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-          const SizedBox(height: 15,),
-          Row(
-            children: [
-              const Icon(FontAwesomeIcons.locationDot, color: Colors.grey,),
-              const SizedBox(width: 5,),
-              Text(
-                address,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                  color: Colors.grey,
-                  fontWeight: FontWeight.w300
+                    left: 8,
+                    child: BlurredContainer(
+                      onTap: firstBlurredContainerOnTap,
+                      children: firstBlurredContainer,
+                    )
                 ),
-              )
-            ],
-          )
-        ],
+                if(hasSecondBlurredContainer) Positioned(
+                    top: 8,
+                    right: 8,
+                    child: BlurredContainer(
+                      onTap: secondBlurredContainerOnTap,
+                      children: secondBlurredContainer,
+                    )
+                ),
+              ],
+            ),
+            const SizedBox(height: 15,),
+            SizedBox(
+              width: double.infinity,
+              child: Text(
+                title,
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold
+                ),
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+            const SizedBox(height: 15,),
+            SizedBox(
+              width: double.infinity,
+              child: Text(
+                description,
+                style: TextStyle(
+                  color: descriptionColor,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            const SizedBox(height: 15,),
+            Row(
+              children: [
+                const Icon(FontAwesomeIcons.locationDot, color: Colors.grey,),
+                const SizedBox(width: 5,),
+                Text(
+                  address,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    color: Colors.grey,
+                    fontWeight: FontWeight.w300
+                  ),
+                )
+              ],
+            )
+          ],
+        ),
       ),
     );
   }

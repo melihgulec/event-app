@@ -25,4 +25,11 @@ class Texts{
   static String onlineEvents = "Online Etkinlikler";
   static String upcomingEvents = "Yaklaşan Etkinlikler";
   static String communities = "Topluluklar";
+  static String eventDetails = "Etkinlik Detayları";
+  static String details = "DETAYLAR";
+  static String sponsors = "SPONSORLAR";
+  static String shares = "PAYLAŞIMLAR";
+  static String eventAddress = "Etkinlik Adresi";
+  static String communityOrganizingTheEvent = "Düzenleyen Topluluk";
+  static String aboutEvent = "Etkinlik Hakkında";
 }

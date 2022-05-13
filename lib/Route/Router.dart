@@ -1,3 +1,6 @@
+import 'package:event_app/Screens/EventDetailDetailTabScreen.dart';
+import 'package:event_app/Screens/EventDetailScreen.dart';
+import 'package:event_app/Screens/EventSponsorsScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:event_app/Screens/LoginScreen.dart';
 import 'package:event_app/Screens/SignUpScreen.dart';
@@ -12,6 +15,9 @@ class Router{
       case homeRoute: return MaterialPageRoute(builder: (context) => HomeScreen());
       case loginRoute: return MaterialPageRoute(builder: (context) => LoginScreen());
       case signUpRoute: return MaterialPageRoute(builder: (context) => SignUpScreen());
+      case eventDetailRoute: return MaterialPageRoute(builder: (context) => EventDetailScreen(event: settings.arguments,));
+      case eventDetailTabRoute: return MaterialPageRoute(builder: (context) => EventDetailDetailTabScreen(event: settings.arguments,));
+      case eventSponsorsRoute: return MaterialPageRoute(builder: (context) => EventSponsorsScreen(event: settings.arguments,));
       default:
         return MaterialPageRoute(builder: (context) => NotFoundScreen());
     }

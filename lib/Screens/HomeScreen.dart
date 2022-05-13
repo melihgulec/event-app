@@ -2,6 +2,7 @@ import 'package:dynamic_icons/dynamic_icons.dart';
 import 'package:event_app/Components/CardBase.dart';
 import 'package:event_app/Components/ColoredBar.dart';
 import 'package:event_app/Components/ContainerWithTitle.dart';
+import 'package:event_app/Constants/RouteNames.dart';
 import 'package:event_app/Constants/Texts.dart';
 import 'package:event_app/Helpers/SizeConfig.dart';
 import 'package:event_app/Models/Community.dart';
@@ -263,8 +264,8 @@ class _HomeScreenState extends State<HomeScreen> {
               width: 280,
               imagePath: item.imagePath,
               title: item.name,
-              address: item.address,
-              description: item.description,
+              address: "${item.city}, ${item.country}",
+              description: item.eventType,
               hasFirstBlurredContainer: true,
               hasSecondBlurredContainer: true,
               secondBlurredContainerOnTap: (){
@@ -291,6 +292,9 @@ class _HomeScreenState extends State<HomeScreen> {
               secondBlurredContainer: const [
                 Icon(FontAwesomeIcons.bookmark, color: Color(0xffF0635A), size: 22,)
               ],
+              cardOnTap: (){
+                Navigator.pushNamed(context, eventDetailRoute, arguments: item);
+              },
             );
           },
         );
@@ -302,7 +306,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return FutureBuilder<EventBase>(
       future: GetAllEvents(),
       builder: (BuildContext context, AsyncSnapshot<EventBase> snapshot){
-        if(!snapshot.hasData) return const Center(child: SizedBox(width:100, height:100 ,child: CircularProgressIndicator()));
+        if(!snapshot.hasData) return const Center(child: SizedBox(width:50, height:50 ,child: CircularProgressIndicator()));
         List<Event> eventList = snapshot.data.data;
 
         eventList.sort((event, event1) => event1.startDate.compareTo(event.startDate));
@@ -321,8 +325,8 @@ class _HomeScreenState extends State<HomeScreen> {
               width: 280,
               imagePath: item.imagePath,
               title: item.name,
-              address: item.address,
-              description: item.description,
+              address: "${item.city}, ${item.country}",
+              description: item.eventType,
               hasFirstBlurredContainer: true,
               hasSecondBlurredContainer: true,
               secondBlurredContainerOnTap: (){
