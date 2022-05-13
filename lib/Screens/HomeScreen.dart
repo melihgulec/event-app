@@ -111,8 +111,8 @@ class _HomeScreenState extends State<HomeScreen> {
           CreateDrawerHeader(),
           DrawerHeaderItem(context, FontAwesomeIcons.user, Texts.myProfile, (){}),
           DrawerHeaderItem(context, FontAwesomeIcons.comment, Texts.messages, (){}),
-          DrawerHeaderItem(context, FontAwesomeIcons.calendar, Texts.events, (){}),
-          DrawerHeaderItem(context, FontAwesomeIcons.heart, Texts.areasOfInterest, (){}),
+          DrawerHeaderItem(context, FontAwesomeIcons.calendar, Texts.events, () => Navigator.pushNamed(context, eventsListRoute)),
+          DrawerHeaderItem(context, FontAwesomeIcons.heart, Texts.areasOfInterest, () => Navigator.pushNamed(context, interestsRoute)),
           DrawerHeaderItem(context, FontAwesomeIcons.bookmark, Texts.favorites, (){}),
           DrawerHeaderItem(context, FontAwesomeIcons.wrench, Texts.settings, (){}),
           DrawerHeaderItem(context, FontAwesomeIcons.question, Texts.help, (){}),
@@ -208,7 +208,6 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   FutureBuilder CreateAreasOfInterestList() {
-
     double seperatorWidth = 20;
 
     return FutureBuilder<InterestBase>(
@@ -234,7 +233,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 icon: DynamicIcons.getIconFromName(item.icon),
                 title: item.name,
                 backgroundColor: Color(int.parse(item.color)),
-                onPressed: (){},
+                onPressed: (){
+                  Navigator.pushNamed(context, eventsListRoute, arguments: item);
+                },
               ),
             );
           },

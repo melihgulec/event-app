@@ -33,3 +33,13 @@ Future<EventSponsorBase> GetEventSponsors(int eventId) async{
     throw Exception('data error');
   }
 }
+
+Future<EventBase> GetEventsByInterest(String interestId) async{
+  String requestUri = "${api.BaseURL}/events/interests/$interestId";
+  final response = await http.get(Uri.parse(requestUri));
+  if(response.statusCode == 200){
+    return EventBase.fromJson(jsonDecode(response.body));
+  }else{
+    throw Exception('data error');
+  }
+}

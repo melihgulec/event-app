@@ -1,4 +1,4 @@
-import 'package:event_app/Components/CustomListTile.dart';
+import 'package:event_app/Components/CustomItemTile.dart';
 import 'package:event_app/Constants/Texts.dart';
 import 'package:event_app/Helpers/SizeConfig.dart';
 import 'package:event_app/Models/Event.dart';
@@ -33,19 +33,19 @@ class EventDetailDetailTabScreen extends StatelessWidget {
             CustomItemTile(
               title: DateFormat("d MMMM, yyyy","tr_TR").format(event.startDate),
               subtitle: DateFormat("EEEE, H:mm:ss", "tr_TR").format(event.startDate),
-              icon: FontAwesomeIcons.calendar,
+              icon: FaIcon(FontAwesomeIcons.calendar),
             ),
             WhiteSpaceVertical(),
             CustomItemTile(
               title: Texts.eventAddress,
               subtitle: event.address,
-              icon: FontAwesomeIcons.locationDot,
+              icon: FaIcon(FontAwesomeIcons.locationDot),
             ),
             WhiteSpaceVertical(),
             CustomItemTile(
               title: Texts.communityOrganizingTheEvent,
               subtitle: event.communityName,
-              icon: FontAwesomeIcons.c,
+              icon: FaIcon(FontAwesomeIcons.c),
             ),
             WhiteSpaceVertical(factor: 6),
             SizedBox(
@@ -72,7 +72,7 @@ class EventDetailDetailTabScreen extends StatelessWidget {
     );
   }
 
-  SizedBox WhiteSpaceVertical({double factor = 4}){
+  SizedBox WhiteSpaceVertical({double factor = 2}){
     return SizedBox(
       height: SizeConfig.blockSizeVertical * factor,
     );

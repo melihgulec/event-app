@@ -32,4 +32,6 @@ class Texts{
   static String eventAddress = "Etkinlik Adresi";
   static String communityOrganizingTheEvent = "Düzenleyen Topluluk";
   static String aboutEvent = "Etkinlik Hakkında";
+  static String interests = "İlgi Alanları";
+  static String eventsNotFound = "Etkinlikler bulunamadı.";
 }

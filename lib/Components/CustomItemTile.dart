@@ -5,14 +5,14 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 class CustomItemTile extends StatelessWidget {
   String title;
   String subtitle;
-  IconData icon;
+  FaIcon icon;
   Color leftBorderColor;
 
   CustomItemTile({
     Key key,
     this.title = "",
     this.subtitle = "",
-    this.icon = FontAwesomeIcons.xmark,
+    this.icon,
     this.leftBorderColor = Colors.transparent
   }) : super(key: key);
 
@@ -21,6 +21,7 @@ class CustomItemTile extends StatelessWidget {
     SizeConfig().init(context);
 
     return Container(
+      padding: EdgeInsets.symmetric(vertical: 5),
       width: SizeConfig.screenWidth,
       decoration: BoxDecoration(
         border: Border(
@@ -34,11 +35,21 @@ class CustomItemTile extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          if(leftBorderColor != Colors.transparent) SizedBox(width: 10,),
-          Icon(
-            icon,
-            color: Colors.white,
-            size: 45,
+          if(leftBorderColor != Colors.transparent) SizedBox(width: 15,),
+          Container(
+            width: 55,
+            height: 55,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(15)
+            ),
+            child: Center(
+              child: FaIcon(
+                icon.icon,
+                color: Colors.black,
+                size: 30,
+              ),
+            ),
           ),
           const SizedBox(width: 20,),
           Expanded(

@@ -2,7 +2,7 @@ import 'package:event_app/Models/Event.dart';
 import 'package:event_app/Models/EventSponsor.dart';
 import 'package:event_app/Services/EventService.dart';
 import 'package:flutter/material.dart';
-import 'package:event_app/Components/CustomListTile.dart';
+import 'package:event_app/Components/CustomItemTile.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class EventSponsorsScreen extends StatelessWidget {
@@ -10,7 +10,7 @@ class EventSponsorsScreen extends StatelessWidget {
 
   EventSponsorsScreen({Key key, this.event}) : super(key: key);
 
-  EdgeInsets pagePadding = EdgeInsets.symmetric(horizontal: 24);
+  EdgeInsets pagePadding = EdgeInsets.symmetric(horizontal: 16, vertical: 0);
 
 
   @override
@@ -34,7 +34,7 @@ class EventSponsorsScreen extends StatelessWidget {
               EventSponsor item = eventSponsorList[index];
 
               return CustomItemTile(
-                icon: FontAwesomeIcons.c,
+                icon: FaIcon(FontAwesomeIcons.c),
                 title: item.company.companyName,
                 leftBorderColor: Theme.of(context).primaryColor,
               );
