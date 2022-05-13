@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ColoredBar extends StatelessWidget {
   Function onPressed;
   String title;
-  IconData icon;
+  FaIcon icon;
   Color backgroundColor;
 
   ColoredBar({
@@ -17,16 +18,16 @@ class ColoredBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 100,
       height: 55,
       child: ElevatedButton(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            Icon(
-              icon,
+            FaIcon(
+              icon.icon,
               color: Colors.white,
             ),
+            SizedBox(width: 10,),
             Text(
               title,
               textAlign: TextAlign.center,
