@@ -1,12 +1,12 @@
 import 'dart:convert';
+
 import 'package:event_app/Constants/Texts.dart';
 import 'package:event_app/Helpers/ToastHelper.dart';
-import 'package:event_app/Models/Interest.dart';
-import 'package:http/http.dart' as http;
-import 'package:event_app/Constants/API.dart' as api;
+import 'package:event_app/Models/EventSponsor.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
-Future<InterestBase> GetRequestInterests(String requestUri) async{
+Future<EventSponsorBase> GetRequestSponsors(String requestUri) async{
   SharedPreferences _preferences = await SharedPreferences.getInstance();
   String token = _preferences.getString("apiToken");
 
@@ -18,15 +18,10 @@ Future<InterestBase> GetRequestInterests(String requestUri) async{
       }
   );
   if(response.statusCode == 200){
-    return InterestBase.fromJson(jsonDecode(response.body));
+    return EventSponsorBase.fromJson(jsonDecode(response.body));
   }else if(response.statusCode == 401){
     ToastHelper().makeToastMessage(Texts.notAuthorized);
   }else{
-    print("InterestsService, ${response.statusCode}");
+    print("Sponsor service, ${response.statusCode}");
   }
-}
-
-Future<InterestBase> GetAllInterests() async{
-  String requestUri = "${api.BaseURL}/interests/";
-  return GetRequestInterests(requestUri);
 }

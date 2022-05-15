@@ -26,7 +26,7 @@ class MainScreen extends StatelessWidget {
     return  MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: AppTheme.darkTheme,
-      initialRoute: homeRoute,
+      initialRoute: loginRoute,
       onGenerateRoute: AppRouter.Router.generateRoute,
     );
   }

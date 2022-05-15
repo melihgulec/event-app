@@ -14,8 +14,8 @@ class Router{
   static Route<dynamic> generateRoute(RouteSettings settings){
     List<dynamic> args = (settings.arguments is List<dynamic> ? settings.arguments : null);
     switch(settings.name){
-      case homeRoute: return MaterialPageRoute(builder: (context) => HomeScreen());
       case loginRoute: return MaterialPageRoute(builder: (context) => LoginScreen());
+      case homeRoute: return MaterialPageRoute(builder: (context) => HomeScreen(user: settings.arguments,));
       case signUpRoute: return MaterialPageRoute(builder: (context) => SignUpScreen());
       case eventDetailRoute: return MaterialPageRoute(builder: (context) => EventDetailScreen(event: settings.arguments,));
       case eventDetailTabRoute: return MaterialPageRoute(builder: (context) => EventDetailDetailTabScreen(event: settings.arguments,));

@@ -8,6 +8,7 @@ import 'package:event_app/Helpers/SizeConfig.dart';
 import 'package:event_app/Models/Community.dart';
 import 'package:event_app/Models/Event.dart';
 import 'package:event_app/Models/Interest.dart';
+import 'package:event_app/Models/User.dart';
 import 'package:event_app/Services/CommunityService.dart';
 import 'package:event_app/Services/EventService.dart';
 import 'package:event_app/Services/InterestsService.dart';
@@ -16,7 +17,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key key}) : super(key: key);
+  User user;
+
+  HomeScreen({Key key, this.user}) : super(key: key);
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -155,14 +158,14 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
-        children: const [
+        children: [
           CircleAvatar(
             backgroundImage: AssetImage("assets/images/mocks/muhtar1.jpg"),
             radius: 30,
           ),
           SizedBox(height: 15,),
           Text(
-            "Melih GÜLEÇ",
+            widget.user.name,
             style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold

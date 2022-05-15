@@ -34,4 +34,5 @@ class Texts{
   static String aboutEvent = "Etkinlik Hakkında";
   static String interests = "İlgi Alanları";
   static String eventsNotFound = "Etkinlikler bulunamadı.";
+  static String notAuthorized = "401 - Yetkiniz yok.";
 }

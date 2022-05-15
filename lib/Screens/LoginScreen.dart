@@ -3,9 +3,12 @@ import 'package:event_app/Components/TextFieldWithIcon.dart';
 import 'package:event_app/Constants/RouteNames.dart';
 import 'package:event_app/Constants/Texts.dart';
 import 'package:event_app/Helpers/SizeConfig.dart';
+import 'package:event_app/Helpers/ToastHelper.dart';
+import 'package:event_app/Services/APIAuthenticationService.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -13,15 +16,29 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  SharedPreferences _preferences;
   double pagePadding = 36;
   bool showPassword = false;
-
   bool rememberMe = false;
+
+  TextEditingController emailController = TextEditingController(text: "a");
+  TextEditingController passwordController = TextEditingController(text: "1");
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getPrefs();
+  }
+
+  getPrefs()async{
+    _preferences =await SharedPreferences.getInstance();
+
+  }
 
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-
     return Scaffold(
       body: SafeArea(
         child: Center(
@@ -47,7 +64,18 @@ class _LoginScreenState extends State<LoginScreen> {
                 ButtonWithIcon(
                   title: Texts.loginHeadText,
                   onPressed: (){
-                    print("hey");
+                    if(emailController.text.isEmpty || passwordController.text.isEmpty){
+                      ToastHelper().makeToastMessage(Texts.allFieldsMustBeFilled);
+                    }else{
+                      UserLogin(emailController.text, passwordController.text).then((value){
+
+                        _preferences.setString("apiToken", value.message);
+
+                        if(value.success && value.message.isNotEmpty){
+                          Navigator.popAndPushNamed(context, homeRoute, arguments: value.data.first);
+                        }
+                      });
+                    }
                   },
                 ),
                 WhiteSpaceVertical(),
@@ -93,6 +121,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return Column(
       children: [
         TextFieldWithIcon(
+          controller: emailController,
           placeholder: Texts.mailPlaceholder,
           prefixIcon: FontAwesomeIcons.envelope,
         ),
@@ -100,6 +129,7 @@ class _LoginScreenState extends State<LoginScreen> {
           height: SizeConfig.blockSizeVertical * 4,
         ),
         TextFieldWithIcon(
+          controller: passwordController,
           placeholder: Texts.passwordPlaceholder,
           prefixIcon: FontAwesomeIcons.lock,
           suffixIcon: showPassword == false ? FontAwesomeIcons.eye : FontAwesomeIcons.eyeSlash,

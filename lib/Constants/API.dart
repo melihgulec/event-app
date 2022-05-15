@@ -1,3 +1,3 @@
 const String port = "44351";
-const String ip = "10.0.2.2";
-const String BaseURL = "https://$ip:$port/api";
+const String ip = "10.10.12.132";
+const String BaseURL = "http://$ip:$port/api";
