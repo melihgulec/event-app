@@ -15,6 +15,7 @@ import 'package:event_app/Services/InterestsService.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
   User user;
@@ -28,6 +29,8 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   var scaffoldKey = GlobalKey<ScaffoldState>();
 
+  SharedPreferences _preferences;
+
   double pageTopPadding = 20;
   double pageBottomPadding = 20;
   double contentHorizontalPadding = 20;
@@ -38,6 +41,10 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+  }
+
+  getPrefs() async{
+    _preferences = await SharedPreferences.getInstance();
   }
 
   @override
@@ -112,14 +119,14 @@ class _HomeScreenState extends State<HomeScreen> {
         padding: EdgeInsets.zero,
         children: [
           CreateDrawerHeader(),
-          DrawerHeaderItem(context, FontAwesomeIcons.user, Texts.myProfile, (){}),
+          DrawerHeaderItem(context, FontAwesomeIcons.user, Texts.myProfile, () => Navigator.pushNamed(context, userProfileRoute, arguments: widget.user)),
           DrawerHeaderItem(context, FontAwesomeIcons.comment, Texts.messages, (){}),
           DrawerHeaderItem(context, FontAwesomeIcons.calendar, Texts.events, () => Navigator.pushNamed(context, eventsListRoute)),
           DrawerHeaderItem(context, FontAwesomeIcons.heart, Texts.areasOfInterest, () => Navigator.pushNamed(context, interestsRoute)),
           DrawerHeaderItem(context, FontAwesomeIcons.bookmark, Texts.favorites, (){}),
           DrawerHeaderItem(context, FontAwesomeIcons.wrench, Texts.settings, (){}),
           DrawerHeaderItem(context, FontAwesomeIcons.question, Texts.help, (){}),
-          DrawerHeaderItem(context, FontAwesomeIcons.minus, Texts.logout, (){}),
+          DrawerHeaderItem(context, FontAwesomeIcons.minus, Texts.logout, () => Navigator.popAndPushNamed(context, loginRoute)),
         ],
       ),
     );
@@ -159,13 +166,18 @@ class _HomeScreenState extends State<HomeScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          CircleAvatar(
-            backgroundImage: AssetImage("assets/images/mocks/muhtar1.jpg"),
-            radius: 30,
+          InkWell(
+            child: CircleAvatar(
+              backgroundImage: AssetImage("assets/images/mocks/muhtar1.jpg"),
+              radius: 30,
+            ),
+            onTap: (){
+              Navigator.pushNamed(context, userProfileRoute, arguments: widget.user);
+            },
           ),
           SizedBox(height: 15,),
           Text(
-            widget.user.name,
+            "${widget.user.name} ${widget.user.surname}",
             style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold
@@ -251,7 +263,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return FutureBuilder<EventBase>(
       future: GetAllEvents(),
       builder: (BuildContext context, AsyncSnapshot<EventBase> snapshot){
-        if(!snapshot.hasData) return const Center(child: SizedBox(width:100, height:100 ,child: CircularProgressIndicator()));
+        if(!snapshot.hasData) return const Center(child: SizedBox(width:50, height:50 ,child: CircularProgressIndicator()));
         List<Event> eventList = snapshot.data.data;
 
         return ListView.separated(
@@ -273,7 +285,7 @@ class _HomeScreenState extends State<HomeScreen> {
               hasFirstBlurredContainer: true,
               hasSecondBlurredContainer: true,
               secondBlurredContainerOnTap: (){
-                print("second");
+
               },
               firstBlurredContainer: [
                 Text(
@@ -357,6 +369,9 @@ class _HomeScreenState extends State<HomeScreen> {
               secondBlurredContainer: const [
                 Icon(FontAwesomeIcons.bookmark, color: Color(0xffF0635A), size: 22,)
               ],
+              cardOnTap: (){
+                Navigator.pushNamed(context, eventDetailRoute, arguments: item);
+              },
             );
           },
         );

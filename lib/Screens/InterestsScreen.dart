@@ -1,5 +1,6 @@
 import 'package:dynamic_icons/dynamic_icons.dart';
 import 'package:event_app/Components/CustomItemTile.dart';
+import 'package:event_app/Constants/RouteNames.dart';
 import 'package:event_app/Constants/Texts.dart';
 import 'package:event_app/Models/Interest.dart';
 import 'package:event_app/Services/InterestsService.dart';
@@ -35,6 +36,9 @@ class InterestsScreen extends StatelessWidget {
                   leftBorderColor: Theme.of(context).primaryColor,
                   icon: DynamicIcons.getIconFromName(item.icon),
                   title: item.name,
+                  onTap: (){
+                    Navigator.pushNamed(context, eventsListRoute, arguments: item);
+                  },
                 );
               },
             );

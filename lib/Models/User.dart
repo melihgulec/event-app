@@ -43,6 +43,7 @@ class User {
     this.createdAt,
     this.imagePath,
     this.country,
+    this.profileDescription,
   });
 
   int id;
@@ -53,6 +54,7 @@ class User {
   DateTime createdAt;
   String imagePath;
   Country country;
+  String profileDescription;
 
   factory User.fromJson(Map<String, dynamic> json) => User(
     id: json["id"],
@@ -63,6 +65,7 @@ class User {
     createdAt: json["createdAt"] == null ? null : DateTime.parse(json["createdAt"]),
     imagePath: json["imagePath"],
     country:json["country"] == null ? null : Country.fromJson(json["country"]),
+    profileDescription: json["profileDescription"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -74,5 +77,6 @@ class User {
     "createdAt": createdAt.toIso8601String(),
     "imagePath": imagePath,
     "country": country.toJson(),
+    "profileDescription": profileDescription
   };
 }

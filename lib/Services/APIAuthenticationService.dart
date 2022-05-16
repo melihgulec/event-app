@@ -25,7 +25,7 @@ Future<UserBase> UserLogin(String mail, String password) async{
       return UserBase.fromJson(decodedBody);
     }
     else{
-      ToastHelper().makeToastMessage(decodedBody.message);
+      ToastHelper().makeToastMessage(decodedBody["message"]);
       return null;
     }
 }

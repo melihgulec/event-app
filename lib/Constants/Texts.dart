@@ -35,4 +35,8 @@ class Texts{
   static String interests = "İlgi Alanları";
   static String eventsNotFound = "Etkinlikler bulunamadı.";
   static String notAuthorized = "401 - Yetkiniz yok.";
+  static String follow = "Takip";
+  static String followers = "Takipçi";
+  static String message = "Mesaj";
+  static String userProfile = "Profil";
 }

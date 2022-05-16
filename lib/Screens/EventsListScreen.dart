@@ -1,4 +1,5 @@
 import 'package:event_app/Components/CustomItemTile.dart';
+import 'package:event_app/Constants/RouteNames.dart';
 import 'package:event_app/Constants/Texts.dart';
 import 'package:event_app/Models/Event.dart';
 import 'package:event_app/Models/Interest.dart';
@@ -50,6 +51,9 @@ class _EventsListScreenState extends State<EventsListScreen> {
             return CustomItemTile(
               title: item.name,
               icon: FaIcon(FontAwesomeIcons.g),
+              onTap: (){
+                Navigator.pushNamed(context, eventDetailRoute, arguments: item);
+              },
             );
           },
         );
@@ -80,6 +84,9 @@ class _EventsListScreenState extends State<EventsListScreen> {
             return CustomItemTile(
               title: item.name,
               icon: FaIcon(FontAwesomeIcons.g),
+              onTap: (){
+                Navigator.pushNamed(context, eventDetailRoute, arguments: item);
+              },
             );
           },
         );
