@@ -4,8 +4,10 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class TextFieldWithAvatar extends StatelessWidget {
   ImageProvider image;
+  TextEditingController controller;
+  Function onPressed;
 
-  TextFieldWithAvatar({Key key, this.image}) : super(key: key);
+  TextFieldWithAvatar({Key key, this.image, this.controller, this.onPressed}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,6 +22,7 @@ class TextFieldWithAvatar extends StatelessWidget {
         SizedBox(width: 12,),
         Expanded(
           child: TextField(
+            controller: controller,
             decoration: InputDecoration(
               contentPadding: EdgeInsets.all(8),
               fillColor: Theme.of(context).inputDecorationTheme.fillColor.withAlpha(24),
@@ -45,9 +48,7 @@ class TextFieldWithAvatar extends StatelessWidget {
                 borderRadius: BorderRadius.circular(5),
               )
             ),
-            onPressed: (){
-
-            },
+            onPressed: onPressed
           ),
         ),
       ],

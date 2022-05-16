@@ -13,7 +13,9 @@ class ShareContainer extends StatelessWidget {
     this.postCreatedAt,
     this.user,
     this.commentSection,
-    this.sessionUserId
+    this.sessionUserId,
+    this.controller,
+    this.onPressed
   }) : super(key: key);
 
   User user;
@@ -21,6 +23,8 @@ class ShareContainer extends StatelessWidget {
   DateTime postCreatedAt;
   String description;
   Widget commentSection;
+  TextEditingController controller;
+  Function onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -65,6 +69,8 @@ class ShareContainer extends StatelessWidget {
           WhiteSpaceVertical(),
           TextFieldWithAvatar(
             image: GetUserImage(sessionUserId),
+            controller: controller,
+            onPressed: onPressed,
           ),
           commentSection,
         ],
