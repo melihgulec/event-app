@@ -3,7 +3,7 @@ import 'package:event_app/Constants/Texts.dart';
 import 'package:event_app/Helpers/SizeConfig.dart';
 import 'package:event_app/Models/User.dart';
 import 'package:event_app/Models/UserFollower.dart';
-import 'package:event_app/Screens/ShareScreen.dart';
+import 'package:event_app/Screens/ProfileShareScreen.dart';
 import 'package:event_app/Services/UserService.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -78,7 +78,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           body: TabBarView(
             children: [
               CreateUserProfileDescription(),
-              ShareScreen(),
+              ProfileShareScreen(),
             ],
           ),
         ),
@@ -120,8 +120,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         ClipOval(
-            child: Image.asset(
-              "assets/images/mocks/muhtar1.jpg",
+            child: Image(
+              image: GetUserImage(widget.user.id),
               fit: BoxFit.cover,
               width: 100,
               height: 100,

@@ -1,4 +1,5 @@
-import 'package:event_app/Components/CustomItemTile.dart';
+import 'package:event_app/Components/ItemTileWithIcon.dart';
+import 'package:event_app/Components/ItemTileWithImage.dart';
 import 'package:event_app/Constants/RouteNames.dart';
 import 'package:event_app/Constants/Texts.dart';
 import 'package:event_app/Models/Event.dart';
@@ -6,6 +7,7 @@ import 'package:event_app/Models/Interest.dart';
 import 'package:event_app/Services/EventService.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
 
 class EventsListScreen extends StatefulWidget {
   Interest interest;
@@ -48,9 +50,11 @@ class _EventsListScreenState extends State<EventsListScreen> {
           itemBuilder: (context, index){
             Event item = eventList[index];
 
-            return CustomItemTile(
-              title: item.name,
-              icon: FaIcon(FontAwesomeIcons.g),
+            return ItemTileWithImage(
+              description: item.name,
+              title: DateFormat("d MMMM, yyyy","tr_TR").format(item.startDate),
+              subtitle: item.city,
+              image: GetEventImage(item.id),
               onTap: (){
                 Navigator.pushNamed(context, eventDetailRoute, arguments: item);
               },
@@ -81,13 +85,23 @@ class _EventsListScreenState extends State<EventsListScreen> {
           itemBuilder: (context, index){
             Event item = eventList[index];
 
-            return CustomItemTile(
+            return ItemTileWithImage(
+              description: item.name,
+              title: DateFormat("d MMMM, yyyy","tr_TR").format(item.startDate),
+              subtitle: item.city,
+              image: GetEventImage(item.id),
+              onTap: (){
+                Navigator.pushNamed(context, eventDetailRoute, arguments: item);
+              },
+            );
+
+            /*return CustomItemTile(
               title: item.name,
               icon: FaIcon(FontAwesomeIcons.g),
               onTap: (){
                 Navigator.pushNamed(context, eventDetailRoute, arguments: item);
               },
-            );
+            );*/
           },
         );
       },

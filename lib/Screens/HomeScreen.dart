@@ -12,6 +12,7 @@ import 'package:event_app/Models/User.dart';
 import 'package:event_app/Services/CommunityService.dart';
 import 'package:event_app/Services/EventService.dart';
 import 'package:event_app/Services/InterestsService.dart';
+import 'package:event_app/Services/UserService.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
@@ -168,7 +169,7 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           InkWell(
             child: CircleAvatar(
-              backgroundImage: AssetImage("assets/images/mocks/muhtar1.jpg"),
+              backgroundImage: GetUserImage(widget.user.id),
               radius: 30,
             ),
             onTap: (){
@@ -278,7 +279,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
             return CardBase(
               width: 280,
-              imagePath: item.imagePath,
+              image: GetEventImage(item.id),
               title: item.name,
               address: "${item.city}, ${item.country}",
               description: item.eventType,
@@ -339,7 +340,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
             return CardBase(
               width: 280,
-              imagePath: item.imagePath,
+              image: GetEventImage(item.id),
               title: item.name,
               address: "${item.city}, ${item.country}",
               description: item.eventType,
@@ -398,7 +399,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
             return CardBase(
               width: 280,
-              imagePath: item.imagePath,
+              image: GetCommunityImage(item.id),
               title: item.name,
               address: "${item.city}, ${item.country}",
               description: item.description,

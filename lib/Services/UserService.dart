@@ -4,6 +4,7 @@ import 'package:event_app/Constants/Texts.dart';
 import 'package:event_app/Helpers/ToastHelper.dart';
 import 'package:event_app/Models/User.dart';
 import 'package:event_app/Models/UserFollower.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'package:event_app/Constants/API.dart' as api;
@@ -60,4 +61,9 @@ Future<UserFollower> GetUserFollowers(int userId) async{
 Future<UserFollower> GetUserFollows(int userId) async{
   String requestUri = "${api.BaseURL}/users/$userId/follows";
   return GetRequestUserFollowers(requestUri);
+}
+
+NetworkImage GetUserImage(int userId){
+  String requestUri = "${api.BaseURL}/users/$userId/image";
+  return NetworkImage(requestUri);
 }

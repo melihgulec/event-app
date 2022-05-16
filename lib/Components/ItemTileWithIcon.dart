@@ -2,14 +2,14 @@ import 'package:event_app/Helpers/SizeConfig.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class CustomItemTile extends StatelessWidget {
+class ItemTileWithIcon extends StatelessWidget {
   String title;
   String subtitle;
   FaIcon icon;
   Color leftBorderColor;
   Function onTap;
 
-  CustomItemTile({
+  ItemTileWithIcon({
     Key key,
     this.title = "",
     this.subtitle = "",

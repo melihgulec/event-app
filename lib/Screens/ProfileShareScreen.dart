@@ -2,14 +2,14 @@ import 'package:event_app/Components/ShareContainer.dart';
 import 'package:event_app/Components/WhiteSpaceVertical.dart';
 import 'package:flutter/material.dart';
 
-class ShareScreen extends StatefulWidget {
-  ShareScreen({Key key}) : super(key: key);
+class ProfileShareScreen extends StatefulWidget {
+  ProfileShareScreen({Key key}) : super(key: key);
 
   @override
-  State<ShareScreen> createState() => _ShareScreenState();
+  State<ProfileShareScreen> createState() => _ProfileShareScreenState();
 }
 
-class _ShareScreenState extends State<ShareScreen> {
+class _ProfileShareScreenState extends State<ProfileShareScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,11 +18,7 @@ class _ShareScreenState extends State<ShareScreen> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              ShareContainer(),
-              WhiteSpaceVertical(factor: 5,),
-              ShareContainer(),
-              WhiteSpaceVertical(factor: 5,),
-              ShareContainer(),
+
             ],
           ),
         ),

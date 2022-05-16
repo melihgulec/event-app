@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:event_app/Constants/Texts.dart';
 import 'package:event_app/Helpers/ToastHelper.dart';
 import 'package:event_app/Models/Community.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:event_app/Constants/API.dart' as api;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -22,7 +23,7 @@ Future<CommunityBase> GetRequestCommunities(String requestUri) async{
   }else if(response.statusCode == 401){
     ToastHelper().makeToastMessage(Texts.notAuthorized);
   }else{
-    print("InterestsService, ${response.statusCode}");
+    print("CommunitiesService, ${response.statusCode}");
   }
 }
 
@@ -34,4 +35,9 @@ Future<CommunityBase> GetAllCommunities() async{
 Future<CommunityBase> GetCommunity(String communityId) async{
   String requestUri = "${api.BaseURL}/communities/$communityId";
   return GetRequestCommunities(requestUri);
+}
+
+NetworkImage GetCommunityImage(int comunityId){
+  String requestUri = "${api.BaseURL}/communities/$comunityId/image";
+  return NetworkImage(requestUri);
 }

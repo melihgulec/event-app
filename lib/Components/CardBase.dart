@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class CardBase extends StatelessWidget {
-  String imagePath;
+  NetworkImage image;
   bool hasFirstBlurredContainer;
   bool hasSecondBlurredContainer;
   List<Widget> firstBlurredContainer;
@@ -19,7 +19,7 @@ class CardBase extends StatelessWidget {
 
   CardBase({
     Key key,
-    this.imagePath = "",
+    this.image,
     this.hasFirstBlurredContainer = false,
     this.hasSecondBlurredContainer = false,
     this.firstBlurredContainer,
@@ -54,7 +54,7 @@ class CardBase extends StatelessWidget {
                   child: Image(
                     width: double.infinity,
                     height: 180,
-                    image: AssetImage(imagePath),
+                    image: image,
                     fit: BoxFit.cover,
                   ),
                 ),

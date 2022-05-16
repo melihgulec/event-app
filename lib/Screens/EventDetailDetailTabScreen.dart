@@ -1,4 +1,4 @@
-import 'package:event_app/Components/CustomItemTile.dart';
+import 'package:event_app/Components/ItemTileWithIcon.dart';
 import 'package:event_app/Constants/Texts.dart';
 import 'package:event_app/Helpers/SizeConfig.dart';
 import 'package:event_app/Models/Event.dart';
@@ -30,19 +30,19 @@ class EventDetailDetailTabScreen extends StatelessWidget {
               ),
             ),
             WhiteSpaceVertical(),
-            CustomItemTile(
+            ItemTileWithIcon(
               title: DateFormat("d MMMM, yyyy","tr_TR").format(event.startDate),
               subtitle: DateFormat("EEEE, H:mm:ss", "tr_TR").format(event.startDate),
               icon: FaIcon(FontAwesomeIcons.calendar),
             ),
             WhiteSpaceVertical(),
-            CustomItemTile(
+            ItemTileWithIcon(
               title: Texts.eventAddress,
               subtitle: event.address,
               icon: FaIcon(FontAwesomeIcons.locationDot),
             ),
             WhiteSpaceVertical(),
-            CustomItemTile(
+            ItemTileWithIcon(
               title: Texts.communityOrganizingTheEvent,
               subtitle: event.communityName,
               icon: FaIcon(FontAwesomeIcons.c),

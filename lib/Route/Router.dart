@@ -3,7 +3,7 @@ import 'package:event_app/Screens/EventDetailScreen.dart';
 import 'package:event_app/Screens/EventSponsorsScreen.dart';
 import 'package:event_app/Screens/EventsListScreen.dart';
 import 'package:event_app/Screens/InterestsScreen.dart';
-import 'package:event_app/Screens/ShareScreen.dart';
+import 'package:event_app/Screens/ProfileShareScreen.dart';
 import 'package:event_app/Screens/UserProfileScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:event_app/Screens/LoginScreen.dart';
@@ -25,7 +25,7 @@ class Router{
       case interestsRoute: return MaterialPageRoute(builder: (context) => InterestsScreen());
       case eventsListRoute: return MaterialPageRoute(builder: (context) => EventsListScreen(interest: settings.arguments,));
       case userProfileRoute: return MaterialPageRoute(builder: (context) => ProfileScreen(user: settings.arguments,));
-      case shareRoute: return MaterialPageRoute(builder: (context) => ShareScreen());
+      case shareRoute: return MaterialPageRoute(builder: (context) => ProfileShareScreen());
       default:
         return MaterialPageRoute(builder: (context) => NotFoundScreen());
     }

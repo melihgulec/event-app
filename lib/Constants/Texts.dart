@@ -39,4 +39,7 @@ class Texts{
   static String followers = "Takipçi";
   static String message = "Mesaj";
   static String userProfile = "Profil";
+  static String commentNotFound = "Yorum bulunamadı.";
+  static String feedNotFound = "Paylaşım bulunamadı.";
+  static String writeCommentPlaceholder = "Yorum yaz...";
 }

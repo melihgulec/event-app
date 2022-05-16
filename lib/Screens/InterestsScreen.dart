@@ -1,5 +1,5 @@
 import 'package:dynamic_icons/dynamic_icons.dart';
-import 'package:event_app/Components/CustomItemTile.dart';
+import 'package:event_app/Components/ItemTileWithIcon.dart';
 import 'package:event_app/Constants/RouteNames.dart';
 import 'package:event_app/Constants/Texts.dart';
 import 'package:event_app/Models/Interest.dart';
@@ -32,7 +32,7 @@ class InterestsScreen extends StatelessWidget {
               itemBuilder: (context, index){
                 Interest item = interestList[index];
 
-                return CustomItemTile(
+                return ItemTileWithIcon(
                   leftBorderColor: Theme.of(context).primaryColor,
                   icon: DynamicIcons.getIconFromName(item.icon),
                   title: item.name,

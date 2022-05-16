@@ -1,14 +1,26 @@
+import 'package:event_app/Models/User.dart';
+import 'package:event_app/Services/UserService.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class CommentContainer extends StatelessWidget {
-  CommentContainer({Key key}) : super(key: key);
+  CommentContainer({
+    Key key,
+    this.user,
+    this.createdAt,
+    this.description
+  }) : super(key: key);
+
+  User user;
+  DateTime createdAt;
+  String description;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         CircleAvatar(
-          backgroundImage: AssetImage("assets/images/mocks/muhtar1.jpg"),
+          backgroundImage: GetUserImage(user.id),
         ),
         SizedBox(width: 15,),
         Expanded(
@@ -17,11 +29,14 @@ class CommentContainer extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Gülfer Güreşçi - 2 saat önce",
+                "${user.name} ${user.surname} - ${DateFormat("d MMM, yyyy HH:mm","tr_TR").format(createdAt)}",
+                style: TextStyle(
+                  fontWeight: FontWeight.w500
+                ),
               ),
               SizedBox(height: 5,),
               Text(
-                "Nulla ac suscipit dolor. Ut odio purus, molestie quis diam nec, aliquet euismod ex. ",
+                description
               )
             ],
           ),

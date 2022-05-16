@@ -71,6 +71,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         if(value != null){
                           if(value.success && value.message.isNotEmpty){
                             _preferences.setString("apiToken", value.message);
+                            _preferences.setInt("sessionUserId", value.data.first.id);
                             Navigator.popAndPushNamed(context, homeRoute, arguments: value.data.first);
                           }
                         }

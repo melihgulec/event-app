@@ -2,7 +2,7 @@ import 'package:event_app/Models/Event.dart';
 import 'package:event_app/Models/EventSponsor.dart';
 import 'package:event_app/Services/EventService.dart';
 import 'package:flutter/material.dart';
-import 'package:event_app/Components/CustomItemTile.dart';
+import 'package:event_app/Components/ItemTileWithIcon.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class EventSponsorsScreen extends StatelessWidget {
@@ -33,7 +33,7 @@ class EventSponsorsScreen extends StatelessWidget {
             itemBuilder: (context, index){
               EventSponsor item = eventSponsorList[index];
 
-              return CustomItemTile(
+              return ItemTileWithIcon(
                 icon: FaIcon(FontAwesomeIcons.c),
                 title: item.company.companyName,
                 leftBorderColor: Theme.of(context).primaryColor,
