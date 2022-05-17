@@ -2,6 +2,7 @@ import 'package:event_app/Components/BaseContainer.dart';
 import 'package:event_app/Components/CommentContainer.dart';
 import 'package:event_app/Components/TextFieldWithAvatar.dart';
 import 'package:event_app/Components/WhiteSpaceVertical.dart';
+import 'package:event_app/Constants/RouteNames.dart';
 import 'package:event_app/Constants/Texts.dart';
 import 'package:event_app/Models/User.dart';
 import 'package:event_app/Services/UserService.dart';
@@ -42,9 +43,14 @@ class ShareContainer extends StatelessWidget {
         children: [
           Row(
             children: [
-              CircleAvatar(
-                backgroundImage: GetUserImage(user.id),
-                radius: 25,
+              InkWell(
+                onTap: (){
+                  Navigator.pushNamed(context, userProfileRoute, arguments: user);
+                },
+                child: CircleAvatar(
+                  backgroundImage: GetUserImage(user.id),
+                  radius: 25,
+                ),
               ),
               SizedBox(width: 12,),
               Column(

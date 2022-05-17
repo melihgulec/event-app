@@ -1,3 +1,4 @@
+import 'package:event_app/Constants/RouteNames.dart';
 import 'package:event_app/Models/User.dart';
 import 'package:event_app/Services/EventFeedCommentService.dart';
 import 'package:event_app/Services/UserService.dart';
@@ -25,8 +26,13 @@ class CommentContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        CircleAvatar(
-          backgroundImage: GetUserImage(user.id),
+        InkWell(
+          onTap: (){
+            Navigator.pushNamed(context, userProfileRoute, arguments: user);
+          },
+          child: CircleAvatar(
+            backgroundImage: GetUserImage(user.id),
+          ),
         ),
         SizedBox(width: 15,),
         Expanded(

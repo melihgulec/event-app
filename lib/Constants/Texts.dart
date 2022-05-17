@@ -46,4 +46,5 @@ class Texts{
   static String sponsorships = "SPONSORLUKLAR";
   static String company = "Şirket";
   static String about = "Hakkında";
+  static String community = "Topluluk";
 }

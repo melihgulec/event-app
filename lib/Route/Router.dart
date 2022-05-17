@@ -1,3 +1,4 @@
+import 'package:event_app/Screens/CommunityScreen.dart';
 import 'package:event_app/Screens/CompanyScreen.dart';
 import 'package:event_app/Screens/EventDetailDetailTabScreen.dart';
 import 'package:event_app/Screens/EventDetailScreen.dart';
@@ -28,6 +29,7 @@ class Router{
       case userProfileRoute: return MaterialPageRoute(builder: (context) => ProfileScreen(user: settings.arguments,));
       case shareRoute: return MaterialPageRoute(builder: (context) => ProfileShareScreen());
       case companyRoute: return MaterialPageRoute(builder: (context) => CompanyScreen(company: settings.arguments,));
+      case communityRoute: return MaterialPageRoute(builder: (context) => CommunityScreen(community: settings.arguments,));
       default:
         return MaterialPageRoute(builder: (context) => NotFoundScreen());
     }

@@ -1,18 +1,15 @@
 import 'dart:convert';
+
 import 'package:event_app/Constants/Texts.dart';
 import 'package:event_app/Helpers/ToastHelper.dart';
-import 'package:event_app/Models/CommentCreateDto.dart';
-import 'package:event_app/Models/Community.dart';
 import 'package:event_app/Models/CommunityFeedComment.dart';
 import 'package:event_app/Models/CommunityFeedCommentCreateDto.dart';
-import 'package:event_app/Models/CommunityFeedCreateDto.dart';
-import 'package:event_app/Models/SharePost.dart';
-import 'package:flutter/material.dart';
+import 'package:event_app/Services/CommunityFeedService.dart';
 import 'package:http/http.dart' as http;
 import 'package:event_app/Constants/API.dart' as api;
 import 'package:shared_preferences/shared_preferences.dart';
 
-Future<CommunityBase> GetRequestCommunities(String requestUri) async{
+Future<CommunityFeedCommentBase> GetRequestCommunityFeedComments(String requestUri) async{
   SharedPreferences _preferences = await SharedPreferences.getInstance();
   String token = _preferences.getString("apiToken");
 
@@ -24,7 +21,7 @@ Future<CommunityBase> GetRequestCommunities(String requestUri) async{
       }
   );
   if(response.statusCode == 200){
-    return CommunityBase.fromJson(jsonDecode(response.body));
+    return CommunityFeedCommentBase.fromJson(jsonDecode(response.body));
   }else if(response.statusCode == 401){
     ToastHelper().makeToastMessage(Texts.notAuthorized);
   }else{
@@ -32,17 +29,18 @@ Future<CommunityBase> GetRequestCommunities(String requestUri) async{
   }
 }
 
-Future<CommunityBase> GetAllCommunities() async{
-  String requestUri = "${api.BaseURL}/communities/";
-  return GetRequestCommunities(requestUri);
+Future<CommunityFeedCommentBase> GetCommunityFeedComments(int postId) async{
+  String requestUri = "${api.BaseURL}/communities-feed/$postId/comments";
+  return GetRequestCommunityFeedComments(requestUri);
 }
 
-Future<CommunityBase> GetCommunity(String communityId) async{
-  String requestUri = "${api.BaseURL}/communities/$communityId";
-  return GetRequestCommunities(requestUri);
+void CreateComment(int postId, CommunityFeedCommentCreateDto commentCreateDto){
+  String requestUri = "${api.BaseURL}/communities-feed/${postId}/comments";
+  String encoded = jsonEncode(commentCreateDto);
+  PostRequestCommunityFeed(requestUri, encoded);
 }
 
-NetworkImage GetCommunityImage(int comunityId){
-  String requestUri = "${api.BaseURL}/communities/$comunityId/image";
-  return NetworkImage(requestUri);
+void DeleteComment(int postId, int commentId){
+  String requestUri = "${api.BaseURL}/communities-feed/${postId}/comments/$commentId";
+  DeleteRequestCommunityFeed(requestUri, null);
 }

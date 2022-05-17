@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:event_app/Components/BaseContainer.dart';
 import 'package:event_app/Components/CommentContainer.dart';
 import 'package:event_app/Components/ShareContainer.dart';
@@ -5,60 +7,59 @@ import 'package:event_app/Components/TextFieldWithAvatar.dart';
 import 'package:event_app/Components/WhiteSpaceVertical.dart';
 import 'package:event_app/Constants/Texts.dart';
 import 'package:event_app/Helpers/SizeConfig.dart';
-import 'package:event_app/Models/CommentCreateDto.dart';
-import 'package:event_app/Models/Event.dart';
-import 'package:event_app/Models/EventFeedComment.dart';
-import 'package:event_app/Models/EventFeedCreateDto.dart';
+import 'package:event_app/Models/Community.dart';
+import 'package:event_app/Models/CommunityFeedComment.dart';
+import 'package:event_app/Models/CommunityFeedCommentCreateDto.dart';
+import 'package:event_app/Models/CommunityFeedCreateDto.dart';
 import 'package:event_app/Models/SharePost.dart';
-import 'package:event_app/Services/EventFeedCommentService.dart';
-import 'package:event_app/Services/EventService.dart';
-import 'package:event_app/Services/SharePostService.dart';
+import 'package:event_app/Services/CommunityFeedCommentService.dart';
+import 'package:event_app/Services/CommunityFeedService.dart';
 import 'package:event_app/Services/UserService.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class EventSharesScreen extends StatefulWidget {
-  Event event;
-  EventSharesScreen({Key key, this.event}) : super(key: key);
+class CommunitySharesScreen extends StatefulWidget {
+  Community community;
+  CommunitySharesScreen({Key key, this.community}) : super(key: key);
 
   @override
-  State<EventSharesScreen> createState() => _EventSharesScreenState();
+  State<CommunitySharesScreen> createState() => _EventSharesScreenState();
 }
 
-class _EventSharesScreenState extends State<EventSharesScreen> {
+class _EventSharesScreenState extends State<CommunitySharesScreen> {
   SharedPreferences _preferences;
 
   var controllers = <TextEditingController>[];
 
   TextEditingController comment = TextEditingController(text: "");
   TextEditingController postDescription = TextEditingController(text: "");
-  EdgeInsets pagePadding = EdgeInsets.all(8);
+  EdgeInsets pagePadding = const EdgeInsets.all(8);
 
   getPrefs() async{
-    _preferences = await SharedPreferences.getInstance(); 
+    _preferences = await SharedPreferences.getInstance();
   }
-  
+
   @override
   void initState() {
     getPrefs();
     // TODO: implement initState
     super.initState();
   }
-  
+
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     return Scaffold(
       body: Padding(
         padding: pagePadding,
         child: Column(
           children: [
             BaseContainer(
-              padding: EdgeInsets.symmetric(vertical: 12, horizontal: 15),
+              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 15),
               child: FutureBuilder(
                 future: SharedPreferences.getInstance(),
                 builder: (context, snapshot){
-                  if(!snapshot.hasData) return CircularProgressIndicator();
+                  if(!snapshot.hasData) return const CircularProgressIndicator();
 
                   return CreatePostTextField();
                 },
@@ -67,9 +68,9 @@ class _EventSharesScreenState extends State<EventSharesScreen> {
             Divider(height: SizeConfig.blockSizeVertical * 5, thickness: 2,),
             Expanded(
               child: FutureBuilder<SharePostBase>(
-                future: GetEventFeed(widget.event.id),
+                future: GetCommunityFeed(widget.community.id),
                 builder: (BuildContext context, AsyncSnapshot<SharePostBase> snapshot){
-                  if(!snapshot.hasData) return const CircularProgressIndicator();
+                  if(!snapshot.hasData) return Center(child: Text(Texts.feedNotFound));
                   List<SharePost> posts = snapshot.data.data;
                   if (posts.isEmpty) return Center(child: Text(Texts.feedNotFound));
 
@@ -82,7 +83,6 @@ class _EventSharesScreenState extends State<EventSharesScreen> {
                     itemBuilder: (context, index){
                       SharePost post = posts[index];
                       controllers.add(TextEditingController(text: ""));
-
                       return ShareContainer(
                         description: post.description,
                         postCreatedAt: post.createdAt,
@@ -91,28 +91,30 @@ class _EventSharesScreenState extends State<EventSharesScreen> {
                         isOwnPost: post.user.id == _preferences.getInt("sessionUserId") ? true : false,
                         onPopupMenuDelete: (){
                           setState(() {
-                            DeletePost(widget.event.id, post.id);
+                            DeletePost(post.id);
                           });
+                          setState(() {});
                         },
                         controller: controllers[index],
                         onPressed: (){
                           setState(() {
-                            CreateComment(widget.event.id, post.id, CommentCreateDto(
+                            CreateComment(post.id, CommunityFeedCommentCreateDto(
                                 createdAt: DateTime.now(),
                                 description: controllers[index].text,
-                                userId: _preferences.getInt("sessionUserId")
+                                userId: _preferences.getInt("sessionUserId"),
+                                communityId: widget.community.id
                             ));
                             setState(() {});
                           });
                         },
-                        commentSection: FutureBuilder<EventFeedCommentBase>(
-                          future: GetEventFeedComment(widget.event.id, post.id),
-                          builder: (BuildContext context, AsyncSnapshot<EventFeedCommentBase> snapshot){
+                        commentSection: FutureBuilder<CommunityFeedCommentBase>(
+                          future: GetCommunityFeedComments(post.id),
+                          builder: (BuildContext context, AsyncSnapshot<CommunityFeedCommentBase> snapshot){
                             if(!snapshot.hasData) return const Text("");
-                            List<EventFeedComment> comments = snapshot.data.data;
+                            List<CommunityFeedComment> comments = snapshot.data.data;
                             comments.sort((comment, comment1) => comment1.createdAt.compareTo(comment.createdAt));
 
-                            if (comments.isEmpty) return Center(child: Text(Texts.commentNotFound));
+                            if (comments.isEmpty) return const Center(child: const Text(""));
 
                             return ListView.separated(
                               physics: const NeverScrollableScrollPhysics(),
@@ -120,7 +122,7 @@ class _EventSharesScreenState extends State<EventSharesScreen> {
                               separatorBuilder: (context, index) => WhiteSpaceVertical(factor: 3),
                               itemCount: comments.length,
                               itemBuilder: (context, index){
-                                EventFeedComment item = comments[index];
+                                CommunityFeedComment item = comments[index];
                                 return CommentContainer(
                                   description: item.description,
                                   createdAt: item.createdAt,
@@ -128,9 +130,11 @@ class _EventSharesScreenState extends State<EventSharesScreen> {
                                   isOwnComment: item.user.id == _preferences.getInt("sessionUserId") ? true : false,
                                   onPopupMenuDelete: (){
                                     setState(() {
-                                      DeleteComment(widget.event.id, post.id, item.id);
+                                      DeleteComment(post.id, item.id);
                                     });
-                                    setState(() {});
+                                    setState(() {
+
+                                    });
                                   },
                                 );
                               },
@@ -156,13 +160,14 @@ class _EventSharesScreenState extends State<EventSharesScreen> {
       placeholder: Texts.shareYourThoughts,
       onPressed: (){
         setState(() {
-          CreatePost(widget.event.id, EventFeedCreateDto(
-            userId: _preferences.getInt("sessionUserId"),
+          CreatePost(widget.community.id, _preferences.getInt("sessionUserId"), CommunityFeedCreateDto(
             description: postDescription.text,
             createdAt: DateTime.now(),
           ));
         });
-        setState(() {});
+        setState(() {
+
+        });
       },
     );
   }

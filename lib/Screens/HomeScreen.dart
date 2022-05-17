@@ -402,7 +402,10 @@ class _HomeScreenState extends State<HomeScreen> {
               image: GetCommunityImage(item.id),
               title: item.name,
               address: "${item.city}, ${item.country}",
-              description: item.description,
+              description: "Kuruluş: ${DateFormat("d MMMM, yyyy","tr_TR").format(item.createdAt)}",
+              cardOnTap: (){
+                Navigator.pushNamed(context, communityRoute, arguments: item);
+              },
             );
           },
         );
