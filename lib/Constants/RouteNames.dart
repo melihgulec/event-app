@@ -8,3 +8,4 @@ const interestsRoute = "interests";
 const eventsListRoute = "eventsList";
 const userProfileRoute = "userProfile";
 const shareRoute = "share";
+const companyRoute = "company";

@@ -30,28 +30,35 @@ class ItemTileWithImage extends StatelessWidget {
               width: 100,
               height: 100,
               padding: EdgeInsets.all(10),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(15),
-                child: Image(
-                  image: image,
-                  fit: BoxFit.cover,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(15)
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(15),
+                  child: Image(
+                    image: image,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               )
             ),
             Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: subtitle == null ? MainAxisAlignment.center : MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                if(title !=null)Text(
                     title,
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
-                Text(
+                if(subtitle == null) SizedBox(height: 10,),
+                if(description != null )Text(
                     description,
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
-                Text(
-                    subtitle,
+                if(subtitle != null) Text(
+                  subtitle,
                   style: Theme.of(context).textTheme.titleSmall,
                 )
               ],

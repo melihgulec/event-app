@@ -43,4 +43,7 @@ class Texts{
   static String feedNotFound = "Paylaşım bulunamadı.";
   static String writeCommentPlaceholder = "Yorum yaz...";
   static String shareYourThoughts = "Düşüncelerini paylaş";
+  static String sponsorships = "SPONSORLUKLAR";
+  static String company = "Şirket";
+  static String about = "Hakkında";
 }

@@ -1,3 +1,4 @@
+import 'package:event_app/Screens/CompanyScreen.dart';
 import 'package:event_app/Screens/EventDetailDetailTabScreen.dart';
 import 'package:event_app/Screens/EventDetailScreen.dart';
 import 'package:event_app/Screens/EventSponsorsScreen.dart';
@@ -26,6 +27,7 @@ class Router{
       case eventsListRoute: return MaterialPageRoute(builder: (context) => EventsListScreen(interest: settings.arguments,));
       case userProfileRoute: return MaterialPageRoute(builder: (context) => ProfileScreen(user: settings.arguments,));
       case shareRoute: return MaterialPageRoute(builder: (context) => ProfileShareScreen());
+      case companyRoute: return MaterialPageRoute(builder: (context) => CompanyScreen(company: settings.arguments,));
       default:
         return MaterialPageRoute(builder: (context) => NotFoundScreen());
     }

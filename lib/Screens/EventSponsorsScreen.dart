@@ -1,5 +1,8 @@
+import 'package:event_app/Components/ItemTileWithImage.dart';
+import 'package:event_app/Constants/RouteNames.dart';
 import 'package:event_app/Models/Event.dart';
 import 'package:event_app/Models/EventSponsor.dart';
+import 'package:event_app/Services/CompaniesService.dart';
 import 'package:event_app/Services/EventService.dart';
 import 'package:flutter/material.dart';
 import 'package:event_app/Components/ItemTileWithIcon.dart';
@@ -37,6 +40,9 @@ class EventSponsorsScreen extends StatelessWidget {
                 icon: FaIcon(FontAwesomeIcons.c),
                 title: item.company.companyName,
                 leftBorderColor: Theme.of(context).primaryColor,
+                onTap: (){
+                  Navigator.pushNamed(context, companyRoute, arguments: item.company);
+                },
               );
             },
           );
