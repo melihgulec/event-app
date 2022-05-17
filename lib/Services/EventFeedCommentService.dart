@@ -49,8 +49,35 @@ Future<void> PostRequestEventFeedComment(String requestUri, String body) async{
   }
 }
 
+Future<void> DeleteRequestEventFeedComment(String requestUri, String body) async{
+  SharedPreferences _preferences = await SharedPreferences.getInstance();
+  String token = _preferences.getString("apiToken");
+
+  final response = await http.delete(
+      Uri.parse(requestUri),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization" : "Bearer $token"
+      },
+      body: body
+  );
+  if(response.statusCode == 200){
+    Map json = jsonDecode(response.body);
+    ToastHelper().makeToastMessage(json["message"]);
+  }else if(response.statusCode == 401){
+    ToastHelper().makeToastMessage(Texts.notAuthorized);
+  }else{
+    print("EventFeedCommentService, ${response.statusCode}");
+  }
+}
+
 void CreateComment(int eventId, int postId, CommentCreateDto commentCreateDto){
   String requestUri = "${api.BaseURL}/events/$eventId/feed/$postId/comments";
   String encoded = jsonEncode(commentCreateDto);
   PostRequestEventFeedComment(requestUri, encoded);
+}
+
+void DeleteComment(int eventId, int postId, int commentId){
+  String requestUri = "${api.BaseURL}/events/$eventId/feed/$postId/comments/${commentId}";
+  DeleteRequestEventFeedComment(requestUri, null);
 }

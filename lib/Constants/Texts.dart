@@ -42,4 +42,5 @@ class Texts{
   static String commentNotFound = "Yorum bulunamadı.";
   static String feedNotFound = "Paylaşım bulunamadı.";
   static String writeCommentPlaceholder = "Yorum yaz...";
+  static String shareYourThoughts = "Düşüncelerini paylaş";
 }

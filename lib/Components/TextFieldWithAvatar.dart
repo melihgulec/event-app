@@ -6,8 +6,15 @@ class TextFieldWithAvatar extends StatelessWidget {
   ImageProvider image;
   TextEditingController controller;
   Function onPressed;
+  String placeholder;
 
-  TextFieldWithAvatar({Key key, this.image, this.controller, this.onPressed}) : super(key: key);
+  TextFieldWithAvatar({
+    Key key,
+    this.image,
+    this.controller,
+    this.onPressed,
+    this.placeholder
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +33,7 @@ class TextFieldWithAvatar extends StatelessWidget {
             decoration: InputDecoration(
               contentPadding: EdgeInsets.all(8),
               fillColor: Theme.of(context).inputDecorationTheme.fillColor.withAlpha(24),
-              hintText: Texts.writeCommentPlaceholder,
+              hintText: placeholder,
               hintStyle: TextStyle(
                 color: Theme.of(context).inputDecorationTheme.hintStyle.color,
                 fontWeight: FontWeight.w400

@@ -2,9 +2,11 @@ import 'package:event_app/Components/BaseContainer.dart';
 import 'package:event_app/Components/CommentContainer.dart';
 import 'package:event_app/Components/TextFieldWithAvatar.dart';
 import 'package:event_app/Components/WhiteSpaceVertical.dart';
+import 'package:event_app/Constants/Texts.dart';
 import 'package:event_app/Models/User.dart';
 import 'package:event_app/Services/UserService.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ShareContainer extends StatelessWidget {
   ShareContainer({
@@ -15,7 +17,9 @@ class ShareContainer extends StatelessWidget {
     this.commentSection,
     this.sessionUserId,
     this.controller,
-    this.onPressed
+    this.onPressed,
+    this.onPopupMenuDelete,
+    this.isOwnPost = false,
   }) : super(key: key);
 
   User user;
@@ -25,6 +29,8 @@ class ShareContainer extends StatelessWidget {
   Widget commentSection;
   TextEditingController controller;
   Function onPressed;
+  bool isOwnPost;
+  Function onPopupMenuDelete;
 
   @override
   Widget build(BuildContext context) {
@@ -54,6 +60,30 @@ class ShareContainer extends StatelessWidget {
                   )
                 ],
               ),
+              Spacer(),
+              if(isOwnPost) PopupMenuButton(
+                icon: Icon(FontAwesomeIcons.ellipsisVertical, color: Colors.white,),
+                onSelected: (buttonType){
+                  if(buttonType == 0){
+                    onPopupMenuDelete();
+                  }
+                },
+                itemBuilder: (context){
+                  return [
+                    PopupMenuItem(
+                        value: 0,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Icon(FontAwesomeIcons.trash, color: Colors.white,),
+                            SizedBox(width: 15,),
+                            Text("Sil"),
+                          ],
+                        )
+                    )
+                  ];
+                },
+              )
             ],
           ),
           WhiteSpaceVertical(),
@@ -71,6 +101,7 @@ class ShareContainer extends StatelessWidget {
             image: GetUserImage(sessionUserId),
             controller: controller,
             onPressed: onPressed,
+            placeholder: Texts.writeCommentPlaceholder,
           ),
           commentSection,
         ],

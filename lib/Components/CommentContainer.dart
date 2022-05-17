@@ -1,6 +1,8 @@
 import 'package:event_app/Models/User.dart';
+import 'package:event_app/Services/EventFeedCommentService.dart';
 import 'package:event_app/Services/UserService.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 
 class CommentContainer extends StatelessWidget {
@@ -8,12 +10,16 @@ class CommentContainer extends StatelessWidget {
     Key key,
     this.user,
     this.createdAt,
-    this.description
+    this.description,
+    this.onPopupMenuDelete,
+    this.isOwnComment = false,
   }) : super(key: key);
 
   User user;
   DateTime createdAt;
   String description;
+  Function onPopupMenuDelete;
+  bool isOwnComment;
 
   @override
   Widget build(BuildContext context) {
@@ -37,10 +43,33 @@ class CommentContainer extends StatelessWidget {
               SizedBox(height: 5,),
               Text(
                 description
-              )
+              ),
             ],
           ),
         ),
+        if(isOwnComment) PopupMenuButton(
+          icon: Icon(FontAwesomeIcons.ellipsisVertical, color: Colors.white,),
+          onSelected: (buttonType){
+            if(buttonType == 0){
+              onPopupMenuDelete();
+            }
+          },
+          itemBuilder: (context){
+            return [
+              PopupMenuItem(
+                value: 0,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Icon(FontAwesomeIcons.trash, color: Colors.white,),
+                    SizedBox(width: 15,),
+                    Text("Sil"),
+                  ],
+                )
+              )
+            ];
+          },
+        )
       ],
     );
   }
