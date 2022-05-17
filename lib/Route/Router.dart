@@ -1,5 +1,8 @@
+import 'package:event_app/Constants/RouteNames.dart';
+import 'package:event_app/Screens/CommunitiesListScreen.dart';
 import 'package:event_app/Screens/CommunityScreen.dart';
 import 'package:event_app/Screens/CompanyScreen.dart';
+import 'package:event_app/Screens/CreateCommunityScreen.dart';
 import 'package:event_app/Screens/EventDetailDetailTabScreen.dart';
 import 'package:event_app/Screens/EventDetailScreen.dart';
 import 'package:event_app/Screens/EventSponsorsScreen.dart';
@@ -10,7 +13,6 @@ import 'package:event_app/Screens/UserProfileScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:event_app/Screens/LoginScreen.dart';
 import 'package:event_app/Screens/SignUpScreen.dart';
-import 'package:event_app/Constants/RouteNames.dart';
 import 'package:event_app/Screens/HomeScreen.dart';
 import 'package:event_app/Screens/NotFoundScreen.dart';
 
@@ -30,6 +32,8 @@ class Router{
       case shareRoute: return MaterialPageRoute(builder: (context) => ProfileShareScreen());
       case companyRoute: return MaterialPageRoute(builder: (context) => CompanyScreen(company: settings.arguments,));
       case communityRoute: return MaterialPageRoute(builder: (context) => CommunityScreen(community: settings.arguments,));
+      case communityListRoute: return MaterialPageRoute(builder: (context) => CommunitiesListScreen());
+      case createCommunityRoute: return MaterialPageRoute(builder: (context) => CreateCommunityScreen());
       default:
         return MaterialPageRoute(builder: (context) => NotFoundScreen());
     }

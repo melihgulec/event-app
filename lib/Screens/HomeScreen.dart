@@ -123,10 +123,11 @@ class _HomeScreenState extends State<HomeScreen> {
           DrawerHeaderItem(context, FontAwesomeIcons.user, Texts.myProfile, () => Navigator.pushNamed(context, userProfileRoute, arguments: widget.user)),
           DrawerHeaderItem(context, FontAwesomeIcons.comment, Texts.messages, (){}),
           DrawerHeaderItem(context, FontAwesomeIcons.calendar, Texts.events, () => Navigator.pushNamed(context, eventsListRoute)),
+          DrawerHeaderItem(context, FontAwesomeIcons.userGroup, Texts.communities, () => Navigator.pushNamed(context, communityListRoute)),
+          DrawerHeaderItem(context, FontAwesomeIcons.userPlus, Texts.createCommunity, () => Navigator.pushNamed(context, createCommunityRoute).then((value) => setState((){}))),
           DrawerHeaderItem(context, FontAwesomeIcons.heart, Texts.areasOfInterest, () => Navigator.pushNamed(context, interestsRoute)),
           DrawerHeaderItem(context, FontAwesomeIcons.bookmark, Texts.favorites, (){}),
           DrawerHeaderItem(context, FontAwesomeIcons.wrench, Texts.settings, (){}),
-          DrawerHeaderItem(context, FontAwesomeIcons.question, Texts.help, (){}),
           DrawerHeaderItem(context, FontAwesomeIcons.minus, Texts.logout, () => Navigator.popAndPushNamed(context, loginRoute)),
         ],
       ),
@@ -162,7 +163,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   DrawerHeader CreateDrawerHeader(){
     return DrawerHeader(
-      margin: const EdgeInsets.only(bottom: 25),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,

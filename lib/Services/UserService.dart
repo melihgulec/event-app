@@ -54,7 +54,6 @@ Future<UserFollower> GetRequestUserFollowers(String requestUri) async{
 
 Future<UserFollower> GetUserFollowers(int userId) async{
   String requestUri = "${api.BaseURL}/users/$userId/followers";
-  print(requestUri);
   return GetRequestUserFollowers(requestUri);
 }
 

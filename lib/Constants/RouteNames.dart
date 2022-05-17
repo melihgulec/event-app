@@ -10,3 +10,5 @@ const userProfileRoute = "userProfile";
 const shareRoute = "share";
 const companyRoute = "company";
 const communityRoute = "community";
+const communityListRoute = "communities";
+const createCommunityRoute = "createCommunity";

@@ -47,4 +47,8 @@ class Texts{
   static String company = "Şirket";
   static String about = "Hakkında";
   static String community = "Topluluk";
+  static String communitiesNotFound = "Topluluklar bulunamadı.";
+  static String createCommunity = "Topluluğunu Oluştur";
+  static String description = "Açıklama";
+  static String communityName = "Topluluk Adı";
 }
