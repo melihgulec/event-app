@@ -40,6 +40,12 @@ class ItemTileWithImage extends StatelessWidget {
                   child: Image(
                     image: image,
                     fit: BoxFit.cover,
+                    errorBuilder: (BuildContext context, Object exception,
+                        StackTrace stackTrace) {
+                      return Center(
+                          child:const Text('😢', style: TextStyle(fontSize: 75),)
+                      );
+                    },
                   ),
                 ),
               )

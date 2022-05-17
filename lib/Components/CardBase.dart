@@ -47,34 +47,42 @@ class CardBase extends StatelessWidget {
         ),
         child: Column(
           children: [
-            Stack(
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: Image(
-                    width: double.infinity,
-                    height: 180,
-                    image: image,
-                    fit: BoxFit.cover,
+            Expanded(
+              child: Stack(
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: Image(
+                      width: double.infinity,
+                      height: 180,
+                      image: image,
+                      fit: BoxFit.cover,
+                      errorBuilder: (BuildContext context, Object exception,
+                          StackTrace stackTrace) {
+                        return Center(
+                          child: const Text('😢', style: TextStyle(fontSize: 75),)
+                        );
+                      },
+                    ),
                   ),
-                ),
-                if (hasFirstBlurredContainer) Positioned(
-                  top: 8,
-                    left: 8,
-                    child: BlurredContainer(
-                      onTap: firstBlurredContainerOnTap,
-                      children: firstBlurredContainer,
-                    )
-                ),
-                if(hasSecondBlurredContainer) Positioned(
+                  if (hasFirstBlurredContainer) Positioned(
                     top: 8,
-                    right: 8,
-                    child: BlurredContainer(
-                      onTap: secondBlurredContainerOnTap,
-                      children: secondBlurredContainer,
-                    )
-                ),
-              ],
+                      left: 8,
+                      child: BlurredContainer(
+                        onTap: firstBlurredContainerOnTap,
+                        children: firstBlurredContainer,
+                      )
+                  ),
+                  if(hasSecondBlurredContainer) Positioned(
+                      top: 8,
+                      right: 8,
+                      child: BlurredContainer(
+                        onTap: secondBlurredContainerOnTap,
+                        children: secondBlurredContainer,
+                      )
+                  ),
+                ],
+              ),
             ),
             const SizedBox(height: 15,),
             SizedBox(

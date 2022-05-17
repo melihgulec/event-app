@@ -118,6 +118,12 @@ class _CommunityScreenState extends State<CommunityScreen> {
               fit: BoxFit.cover,
               width: 100,
               height: 100,
+              errorBuilder: (BuildContext context, Object exception,
+                  StackTrace stackTrace) {
+                return Center(
+                  child:const Text('😢', style: TextStyle(fontSize: 75),)
+                );
+              },
             )
         ),
       ],

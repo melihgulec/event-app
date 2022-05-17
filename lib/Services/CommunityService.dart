@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:event_app/Constants/Texts.dart';
 import 'package:event_app/Helpers/ToastHelper.dart';
 import 'package:event_app/Models/Community.dart';
@@ -28,6 +29,40 @@ Future<CommunityBase> GetRequestCommunities(String requestUri) async{
   }
 }
 
+Future<void> MultiPartRequestCommunities(String requestUri, Map<String, String> body, String imagePath) async{
+  SharedPreferences _preferences = await SharedPreferences.getInstance();
+  String token = _preferences.getString("apiToken");
+
+  Map<String, String> headers = {
+    'Content-Type': 'multipart/form-data',
+    'Authorization' : 'Bearer $token'
+  };
+
+  print(body);
+  print(requestUri);
+
+  final request = await http.MultipartRequest(
+    'POST',
+    Uri.parse(requestUri)
+   )
+    ..headers.addAll(headers)
+    ..files.add(await http.MultipartFile.fromPath('files', imagePath));
+
+  var response = await request.send();
+
+  if(response.statusCode == 200){
+    ToastHelper().makeToastMessage("Başarılı");
+  }else if(response.statusCode == 401){
+    ToastHelper().makeToastMessage(Texts.notAuthorized);
+  }else{
+    var responseString = await response.stream.bytesToString();
+    final decodedMap = json.decode(responseString);
+    print(decodedMap);
+
+    print("CommunitiesService, ${response.statusCode}");
+  }
+}
+
 Future<void> PostRequestCommunities(String requestUri, String body) async{
   SharedPreferences _preferences = await SharedPreferences.getInstance();
   String token = _preferences.getString("apiToken");
@@ -38,7 +73,7 @@ Future<void> PostRequestCommunities(String requestUri, String body) async{
         "Content-Type": "application/json",
         "Authorization" : "Bearer $token"
       },
-    body: body
+      body: body
   );
   if(response.statusCode == 200){
     Map json = jsonDecode(response.body);
@@ -60,10 +95,19 @@ Future<CommunityBase> GetCommunity(String communityId) async{
   return GetRequestCommunities(requestUri);
 }
 
-void CreateCommunity(CommunityCreateDto communityCreateDto) async{
-  String requestUri = "${api.BaseURL}/communities";
-  String encoded = jsonEncode(communityCreateDto);
-  return PostRequestCommunities(requestUri, encoded);
+void CreateCommunity(CommunityCreateDto communityCreateDto, File image) async{
+  String requestUri = "${api.BaseURL}/communities?name=${communityCreateDto.name}&cityId=${communityCreateDto.cityId}&countryId=${communityCreateDto.countryId}&description=${communityCreateDto.description}&imagePath=${communityCreateDto.imagePath}";
+  //Map<String, dynamic> body = jsonDecode(jsonEncode(communityCreateDto));
+
+  Map<String, String> body = {
+    "name" : communityCreateDto.name.toString(),
+    "description": communityCreateDto.description.toString(),
+    "imagePath": communityCreateDto.imagePath.toString(),
+    "countryId": communityCreateDto.countryId.toString(),
+    "cityId": communityCreateDto.cityId.toString()
+  };
+
+  return MultiPartRequestCommunities(requestUri, body, image.path);
 }
 
 NetworkImage GetCommunityImage(int comunityId){

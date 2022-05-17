@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:event_app/Components/ButtonWithIcon.dart';
 import 'package:event_app/Components/TextFieldWithIcon.dart';
 import 'package:event_app/Components/WhiteSpaceVertical.dart';
@@ -11,6 +13,7 @@ import 'package:event_app/Services/CommunityService.dart';
 import 'package:event_app/Services/CountryService.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:image_picker/image_picker.dart';
 
 class CreateCommunityScreen extends StatefulWidget {
   CreateCommunityScreen({
@@ -31,10 +34,21 @@ class _CreateCommunityScreenState extends State<CreateCommunityScreen> {
   String cityDropdownValue = "1";
   String oldCityDropdownValue = "1";
 
+  File communityImage;
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+  }
+
+  Future pickImage() async{
+    final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+
+    if(image != null){
+      final imageTemporary = File(image.path);
+      communityImage = imageTemporary;
+    }
   }
 
   @override
@@ -49,7 +63,7 @@ class _CreateCommunityScreenState extends State<CreateCommunityScreen> {
               SizedBox(
                 width: double.infinity,
                 child: Text(
-                    Texts.signUp,
+                    Texts.createCommunity,
                     style: Theme.of(context).textTheme.headline5
                 ),
               ),
@@ -86,24 +100,30 @@ class _CreateCommunityScreenState extends State<CreateCommunityScreen> {
                 child: CreateCityDropdown(),
               ),
               WhiteSpaceVertical(),
-              TextFieldWithIcon(
-                controller: imagePath,
-                prefixIcon: FontAwesomeIcons.user,
-                placeholder: Texts.description,
+              Container(
+                width: double.infinity,
+                height: 60,
+                child: ElevatedButton(
+                  child: Text(Texts.addPhotograph, style: TextStyle(fontSize: 15),),
+                  onPressed: ()=> pickImage(),
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.white,
+                  ),
+                ),
               ),
-              WhiteSpaceVertical(),
+              WhiteSpaceVertical(factor: 5,),
               ButtonWithIcon(
                   title: Texts.signUp,
                   onPressed: (){
-                    if(communityNameController.text.isNotEmpty && descriptionController.text.isNotEmpty && imagePath.text.isNotEmpty){
+                    if(communityNameController.text.isNotEmpty && descriptionController.text.isNotEmpty && communityImage != null){
                       CreateCommunity(
                         CommunityCreateDto(
                           description: descriptionController.text,
                           name: communityNameController.text,
                           cityId: int.parse(cityDropdownValue),
                           countryId: int.parse(countryDropdownValue),
-                          imagePath: imagePath.text
-                        )
+                          imagePath: communityImage.path,
+                        ), communityImage
                       );
                     }
                     else{

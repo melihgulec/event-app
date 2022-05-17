@@ -51,4 +51,5 @@ class Texts{
   static String createCommunity = "Topluluğunu Oluştur";
   static String description = "Açıklama";
   static String communityName = "Topluluk Adı";
+  static String addPhotograph = "Fotoğraf Ekle";
 }
