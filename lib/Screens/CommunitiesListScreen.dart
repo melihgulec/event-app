@@ -43,7 +43,7 @@ class CommunitiesListScreen extends StatelessWidget {
             return ItemTileWithImage(
               description: item.name,
               title: DateFormat("d MMMM, yyyy","tr_TR").format(item.createdAt),
-              subtitle: item.city,
+              subtitle: item.city.name,
               image: GetCommunityImage(item.id),
               onTap: (){
                 Navigator.pushNamed(context, communityRoute, arguments: item);

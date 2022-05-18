@@ -32,7 +32,7 @@ Future<UserBase> GetRequestUsers(String requestUri) async{
   }
 }
 
-Future<UserFollower> GetRequestUserFollowers(String requestUri) async{
+Future<UserFollowerBase> GetRequestUserFollowers(String requestUri) async{
   SharedPreferences _preferences = await SharedPreferences.getInstance();
   String token = _preferences.getString("apiToken");
 
@@ -44,7 +44,7 @@ Future<UserFollower> GetRequestUserFollowers(String requestUri) async{
       }
   );
   if(response.statusCode == 200){
-    return UserFollower.fromJson(jsonDecode(response.body));
+    return UserFollowerBase.fromJson(jsonDecode(response.body));
   }else if(response.statusCode == 401){
     ToastHelper().makeToastMessage(Texts.notAuthorized);
   }else{
@@ -52,12 +52,12 @@ Future<UserFollower> GetRequestUserFollowers(String requestUri) async{
   }
 }
 
-Future<UserFollower> GetUserFollowers(int userId) async{
+Future<UserFollowerBase> GetUserFollowers(int userId) async{
   String requestUri = "${api.BaseURL}/users/$userId/followers";
   return GetRequestUserFollowers(requestUri);
 }
 
-Future<UserFollower> GetUserFollows(int userId) async{
+Future<UserFollowerBase> GetUserFollows(int userId) async{
   String requestUri = "${api.BaseURL}/users/$userId/follows";
   return GetRequestUserFollowers(requestUri);
 }
@@ -65,4 +65,30 @@ Future<UserFollower> GetUserFollows(int userId) async{
 NetworkImage GetUserImage(int userId){
   String requestUri = "${api.BaseURL}/users/$userId/image";
   return NetworkImage(requestUri);
+}
+
+Future<void> PostRequestUserFollows(String requestUri) async{
+  SharedPreferences _preferences = await SharedPreferences.getInstance();
+  String token = _preferences.getString("apiToken");
+
+  final response = await http.post(
+      Uri.parse(requestUri),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization" : "Bearer $token"
+      },
+  );
+  if(response.statusCode == 200){
+    Map json = jsonDecode(response.body);
+    ToastHelper().makeToastMessage(json["message"]);
+  }else if(response.statusCode == 401){
+    ToastHelper().makeToastMessage(Texts.notAuthorized);
+  }else{
+    print("CommunitiesService, ${response.statusCode}");
+  }
+}
+
+Future<void> PostUserFollow(int sourceUserId, int targetUserId) async{
+  String requestUri = "${api.BaseURL}/users/$sourceUserId/follow/$targetUserId";
+  return PostRequestUserFollows(requestUri);
 }

@@ -283,8 +283,8 @@ class _HomeScreenState extends State<HomeScreen> {
               width: 280,
               image: GetEventImage(item.id),
               title: item.name,
-              address: "${item.city}, ${item.country}",
-              description: item.eventType,
+              address: "${item.city.name}, ${item.country.name}",
+              description: item.eventType.name,
               hasFirstBlurredContainer: true,
               hasSecondBlurredContainer: true,
               secondBlurredContainerOnTap: (){
@@ -345,8 +345,8 @@ class _HomeScreenState extends State<HomeScreen> {
               width: 280,
               image: GetEventImage(item.id),
               title: item.name,
-              address: "${item.city}, ${item.country}",
-              description: item.eventType,
+              address: "${item.city.name}, ${item.country.name}",
+              description: item.eventType.name,
               hasFirstBlurredContainer: true,
               hasSecondBlurredContainer: true,
               secondBlurredContainerOnTap: (){
@@ -405,7 +405,7 @@ class _HomeScreenState extends State<HomeScreen> {
               width: 280,
               image: GetCommunityImage(item.id),
               title: item.name,
-              address: "${item.city}, ${item.country}",
+              address: "${item.city.name}, ${item.country.name}",
               description: "Kuruluş: ${DateFormat("d MMMM, yyyy","tr_TR").format(item.createdAt)}",
               cardOnTap: (){
                 Navigator.pushNamed(context, communityRoute, arguments: item);

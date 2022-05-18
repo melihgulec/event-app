@@ -19,6 +19,7 @@ Future<CompanySponsorshipsBase> GetRequestCompanySponsorships(String requestUri)
         "Authorization" : "Bearer $token"
       }
   );
+
   if(response.statusCode == 200){
     return CompanySponsorshipsBase.fromJson(jsonDecode(response.body));
   }else if(response.statusCode == 401){

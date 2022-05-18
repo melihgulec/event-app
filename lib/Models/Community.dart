@@ -1,14 +1,16 @@
 // To parse this JSON data, do
 //
-//     final community = communityFromJson(jsonString);
+//     final communityBase = communityBaseFromJson(jsonString);
 
 import 'dart:convert';
 
+import 'package:event_app/Models/City.dart';
+import 'package:event_app/Models/Country.dart';
 import 'package:event_app/Models/Interest.dart';
 
-CommunityBase communityFromJson(String str) => CommunityBase.fromJson(json.decode(str));
+CommunityBase communityBaseFromJson(String str) => CommunityBase.fromJson(json.decode(str));
 
-String communityToJson(CommunityBase data) => json.encode(data.toJson());
+String communityBaseToJson(CommunityBase data) => json.encode(data.toJson());
 
 class CommunityBase {
   CommunityBase({
@@ -47,8 +49,8 @@ class Community {
   String description;
   DateTime createdAt;
   String imagePath;
-  String country;
-  String city;
+  Country country;
+  City city;
   List<Interest> interest;
 
   factory Community.fromJson(Map<String, dynamic> json) => Community(
@@ -57,8 +59,8 @@ class Community {
     description: json["description"],
     createdAt: DateTime.parse(json["createdAt"]),
     imagePath: json["imagePath"],
-    country: json["country"],
-    city: json["city"],
+    country: Country.fromJson(json["country"]),
+    city: City.fromJson(json["city"]),
     interest: List<Interest>.from(json["interest"].map((x) => Interest.fromJson(x))),
   );
 
@@ -68,8 +70,8 @@ class Community {
     "description": description,
     "createdAt": createdAt.toIso8601String(),
     "imagePath": imagePath,
-    "country": country,
-    "city": city,
+    "country": country.toJson(),
+    "city": city.toJson(),
     "interest": List<dynamic>.from(interest.map((x) => x.toJson())),
   };
 }

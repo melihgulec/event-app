@@ -1,4 +1,5 @@
 import 'package:event_app/Components/ItemTileWithIcon.dart';
+import 'package:event_app/Constants/RouteNames.dart';
 import 'package:event_app/Constants/Texts.dart';
 import 'package:event_app/Helpers/SizeConfig.dart';
 import 'package:event_app/Models/Event.dart';
@@ -44,8 +45,11 @@ class EventDetailDetailTabScreen extends StatelessWidget {
             WhiteSpaceVertical(),
             ItemTileWithIcon(
               title: Texts.communityOrganizingTheEvent,
-              subtitle: event.communityName,
+              subtitle: event.community.name,
               icon: FaIcon(FontAwesomeIcons.c),
+              onTap: (){
+                Navigator.pushNamed(context, communityRoute, arguments: event.community);
+              },
             ),
             WhiteSpaceVertical(factor: 6),
             SizedBox(

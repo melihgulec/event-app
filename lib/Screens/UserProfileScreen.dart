@@ -1,12 +1,16 @@
+import 'dart:convert';
+
 import 'package:event_app/Components/ButtonWithIcon.dart';
 import 'package:event_app/Constants/Texts.dart';
 import 'package:event_app/Helpers/SizeConfig.dart';
 import 'package:event_app/Models/User.dart';
 import 'package:event_app/Models/UserFollower.dart';
 import 'package:event_app/Screens/ProfileShareScreen.dart';
+import 'package:event_app/Services/UserFollowerService.dart';
 import 'package:event_app/Services/UserService.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileScreen extends StatefulWidget {
   User user;
@@ -21,6 +25,19 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  SharedPreferences _preferences;
+
+  getPrefs()async{
+    _preferences = await SharedPreferences.getInstance();
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getPrefs();
+  }
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -47,17 +64,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  children: CreateFollowBox(0, 0),
+                  children: CreateFollowBox(),
                 )
               ),
               SliverToBoxAdapter(child: WhiteSpaceVertical()),
               SliverToBoxAdapter(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: SizedBox(
-                    height: 55,
-                    child: Container(child: CreateFollowButtons()),
-                  ),
+                child: FutureBuilder(
+                  future: SharedPreferences.getInstance(),
+                  builder: (context, snapshot){
+                    if(!snapshot.hasData) return CircularProgressIndicator();
+                    if(_preferences.getInt("sessionUserId") == widget.user.id) return SizedBox(width: 0, height: 0,);
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: SizedBox(
+                          height: 55,
+                          child: CreateFollowButtons()
+                      ),
+                    );
+                  },
                 ),
               ),
               SliverList(
@@ -137,13 +161,46 @@ class _ProfileScreenState extends State<ProfileScreen> {
         const Spacer(),
         Expanded(
           flex: 15,
-          child: ButtonWithIcon(
-            title: Texts.follow,
-            hasSuffixIcon: false,
-            prefixIcon: FontAwesomeIcons.userPlus,
-            onPressed: (){
+          child: FutureBuilder(
+            future: SharedPreferences.getInstance(),
+            builder: (context, snapshot){
+              if(!snapshot.hasData) return CircularProgressIndicator();
+              return FutureBuilder(
+                future: GetUserFollows(_preferences.getInt("sessionUserId")),
+                builder: (context, AsyncSnapshot<UserFollowerBase> snapshot){
+                  bool isUserContain = false;
+                  UserFollower follow;
 
-            },
+                  if(snapshot.hasData){
+                    List<UserFollower> followers = snapshot.data.data;
+
+                    for(int i = 0; i < followers.length; i++){
+                      if(followers[i].user.id == widget.user.id){
+                        isUserContain = true;
+                        follow = followers[i];
+                        break;
+                      }
+                    }
+                  }
+
+                  return ButtonWithIcon(
+                    title: isUserContain ? Texts.stopFollowing : Texts.follow,
+                    hasSuffixIcon: false,
+                    prefixIcon: FontAwesomeIcons.userPlus,
+                    onPressed: (){
+                      setState(() {
+                        if(isUserContain){
+                          DeleteUserFollow(follow.id);
+                        }else{
+                          PostUserFollow(_preferences.getInt("sessionUserId"), widget.user.id);
+                          GetUserFollowers(widget.user.id);
+                        }
+                      });
+                    },
+                  );
+                },
+              );
+            }
           ),
         ),
         const Spacer(),
@@ -163,13 +220,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  List<Widget> CreateFollowBox(int follows, int followers){
+  List<Widget> CreateFollowBox(){
     return [
       Column(
         children: [
-          FutureBuilder<UserFollower>(
+          FutureBuilder<UserFollowerBase>(
             future: GetUserFollows(widget.user.id),
-            builder: (BuildContext context, AsyncSnapshot<UserFollower> snapshot){
+            builder: (BuildContext context, AsyncSnapshot<UserFollowerBase> snapshot){
               if(!snapshot.hasData) return const CircularProgressIndicator();
               int count = snapshot.data.count;
 
@@ -204,12 +261,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
       Column(
         children: [
-          FutureBuilder<UserFollower>(
+          FutureBuilder<UserFollowerBase>(
             future: GetUserFollowers(widget.user.id),
-            builder: (BuildContext context, AsyncSnapshot<UserFollower> snapshot){
+            builder: (BuildContext context, AsyncSnapshot<UserFollowerBase> snapshot){
               if(!snapshot.hasData) return const CircularProgressIndicator();
 
               int count = snapshot.data.count;
+
               return Text(
                 count.toString(),
                 style: Theme.of(context).textTheme.subtitle1,

@@ -1,17 +1,17 @@
 // To parse this JSON data, do
 //
-//     final userFollower = userFollowerFromJson(jsonString);
+//     final userFollowerBase = userFollowerBaseFromJson(jsonString);
 
 import 'dart:convert';
 
 import 'package:event_app/Models/User.dart';
 
-UserFollower userFollowerFromJson(String str) => UserFollower.fromJson(json.decode(str));
+UserFollowerBase userFollowerBaseFromJson(String str) => UserFollowerBase.fromJson(json.decode(str));
 
-String userFollowerToJson(UserFollower data) => json.encode(data.toJson());
+String userFollowerBaseToJson(UserFollowerBase data) => json.encode(data.toJson());
 
-class UserFollower {
-  UserFollower({
+class UserFollowerBase {
+  UserFollowerBase({
     this.success,
     this.count,
     this.data,
@@ -19,17 +19,37 @@ class UserFollower {
 
   bool success;
   int count;
-  List<User> data;
+  List<UserFollower> data;
 
-  factory UserFollower.fromJson(Map<String, dynamic> json) => UserFollower(
+  factory UserFollowerBase.fromJson(Map<String, dynamic> json) => UserFollowerBase(
     success: json["success"],
     count: json["count"],
-    data: List<User>.from(json["data"].map((x) => User.fromJson(x))),
+    data: List<UserFollower>.from(json["data"].map((x) => UserFollower.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
     "success": success,
     "count": count,
     "data": List<dynamic>.from(data.map((x) => x.toJson())),
+  };
+}
+
+class UserFollower {
+  UserFollower({
+    this.id,
+    this.user,
+  });
+
+  int id;
+  User user;
+
+  factory UserFollower.fromJson(Map<String, dynamic> json) => UserFollower(
+    id: json["id"],
+    user: User.fromJson(json["user"]),
+  );
+
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "user": user.toJson(),
   };
 }

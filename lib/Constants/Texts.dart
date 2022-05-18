@@ -60,4 +60,5 @@ class Texts{
   static String online = "Online";
   static String create = "Oluştur";
   static String onlineLink = "Link";
+  static String stopFollowing = "Takibi Bırak";
 }

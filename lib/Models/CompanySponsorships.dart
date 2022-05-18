@@ -4,6 +4,7 @@
 
 import 'dart:convert';
 
+import 'package:event_app/Models/City.dart';
 import 'package:event_app/Models/Event.dart';
 
 CompanySponsorshipsBase companySponsorshipsBaseFromJson(String str) => CompanySponsorshipsBase.fromJson(json.decode(str));

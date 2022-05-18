@@ -1,12 +1,20 @@
 // To parse this JSON data, do
 //
-//     final event = eventFromJson(jsonString);
+//     final eventBase = eventBaseFromJson(jsonString);
 
 import 'dart:convert';
 
-EventBase eventFromJson(String str) => EventBase.fromJson(json.decode(str));
+import 'package:event_app/Models/City.dart';
+import 'package:event_app/Models/Community.dart';
+import 'package:event_app/Models/Country.dart';
+import 'package:event_app/Models/EventType.dart';
+import 'package:event_app/Models/Interest.dart';
+import 'package:event_app/Models/Language.dart';
+import 'package:event_app/Models/ParticipationType.dart';
 
-String eventToJson(EventBase data) => json.encode(data.toJson());
+EventBase eventBaseFromJson(String str) => EventBase.fromJson(json.decode(str));
+
+String eventBaseToJson(EventBase data) => json.encode(data.toJson());
 
 class EventBase {
   EventBase({
@@ -40,7 +48,8 @@ class Event {
     this.onlineLink,
     this.isOver,
     this.imagePath,
-    this.communityName,
+    this.interest,
+    this.community,
     this.eventType,
     this.language,
     this.participationType,
@@ -58,12 +67,13 @@ class Event {
   String onlineLink;
   bool isOver;
   String imagePath;
-  String communityName;
-  String eventType;
-  String language;
-  String participationType;
-  String country;
-  String city;
+  Interest interest;
+  Community community;
+  EventType eventType;
+  Language language;
+  ParticipationType participationType;
+  Country country;
+  City city;
 
   factory Event.fromJson(Map<String, dynamic> json) => Event(
     id: json["id"],
@@ -76,12 +86,13 @@ class Event {
     onlineLink: json["onlineLink"],
     isOver: json["isOver"],
     imagePath: json["imagePath"],
-    communityName: json["communityName"],
-    eventType: json["eventType"],
-    language: json["language"],
-    participationType: json["participationType"],
-    country: json["country"],
-    city: json["city"],
+    interest: Interest.fromJson(json["interest"]),
+    community: Community.fromJson(json["community"]),
+    eventType: EventType.fromJson(json["eventType"]),
+    language: Language.fromJson(json["language"]),
+    participationType: ParticipationType.fromJson(json["participationType"]),
+    country: Country.fromJson(json["country"]),
+    city: City.fromJson(json["city"]),
   );
 
   Map<String, dynamic> toJson() => {
@@ -95,11 +106,12 @@ class Event {
     "onlineLink": onlineLink,
     "isOver": isOver,
     "imagePath": imagePath,
-    "communityName": communityName,
-    "eventType": eventType,
-    "language": language,
-    "participationType": participationType,
-    "country": country,
-    "city": city,
+    "interest": interest.toJson(),
+    "community": community.toJson(),
+    "eventType": eventType.toJson(),
+    "language": language.toJson(),
+    "participationType": participationType.toJson(),
+    "country": country.toJson(),
+    "city": city.toJson(),
   };
 }

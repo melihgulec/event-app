@@ -160,7 +160,7 @@ class _CommunityScreenState extends State<CommunityScreen> {
       ),*/
       Column(
         children: [
-          Text("${widget.community.city}"),
+          Text("${widget.community.city.name}"),
           WhiteSpaceVertical(factor: 1),
           Text(
             Texts.location,

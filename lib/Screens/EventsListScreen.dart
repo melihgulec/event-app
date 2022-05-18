@@ -6,7 +6,6 @@ import 'package:event_app/Models/Event.dart';
 import 'package:event_app/Models/Interest.dart';
 import 'package:event_app/Services/EventService.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 
 class EventsListScreen extends StatefulWidget {
@@ -53,7 +52,7 @@ class _EventsListScreenState extends State<EventsListScreen> {
             return ItemTileWithImage(
               description: item.name,
               title: DateFormat("d MMMM, yyyy","tr_TR").format(item.startDate),
-              subtitle: item.city,
+              subtitle: item.city.name,
               image: GetEventImage(item.id),
               onTap: (){
                 Navigator.pushNamed(context, eventDetailRoute, arguments: item);
@@ -88,7 +87,7 @@ class _EventsListScreenState extends State<EventsListScreen> {
             return ItemTileWithImage(
               description: item.name,
               title: DateFormat("d MMMM, yyyy","tr_TR").format(item.startDate),
-              subtitle: item.city,
+              subtitle: item.city.name,
               image: GetEventImage(item.id),
               onTap: (){
                 Navigator.pushNamed(context, eventDetailRoute, arguments: item);
