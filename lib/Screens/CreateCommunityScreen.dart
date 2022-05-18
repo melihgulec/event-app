@@ -8,9 +8,11 @@ import 'package:event_app/Helpers/ToastHelper.dart';
 import 'package:event_app/Models/City.dart';
 import 'package:event_app/Models/CommunityCreateDto.dart';
 import 'package:event_app/Models/Country.dart';
+import 'package:event_app/Models/EventType.dart';
 import 'package:event_app/Services/CityService.dart';
 import 'package:event_app/Services/CommunityService.dart';
 import 'package:event_app/Services/CountryService.dart';
+import 'package:event_app/Services/EventTypeService.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
@@ -45,10 +47,12 @@ class _CreateCommunityScreenState extends State<CreateCommunityScreen> {
   Future pickImage() async{
     final image = await ImagePicker().pickImage(source: ImageSource.gallery);
 
-    if(image != null){
-      final imageTemporary = File(image.path);
-      communityImage = imageTemporary;
-    }
+    setState(() {
+      if(image != null){
+        final imageTemporary = File(image.path);
+        communityImage = imageTemporary;
+      }
+    });
   }
 
   @override
@@ -60,14 +64,8 @@ class _CreateCommunityScreenState extends State<CreateCommunityScreen> {
           padding: EdgeInsets.symmetric(horizontal: pagePadding),
           child: Column(
             children: [
-              SizedBox(
-                width: double.infinity,
-                child: Text(
-                    Texts.createCommunity,
-                    style: Theme.of(context).textTheme.headline5
-                ),
-              ),
-              WhiteSpaceVertical(),
+              communityImage != null ? ClipOval(child: Image.file(communityImage, width: 100, height: 100, fit: BoxFit.cover,)) : CreateCommunityImage(),
+              WhiteSpaceVertical(factor: 5,),
               TextFieldWithIcon(
                 controller: communityNameController,
                 prefixIcon: FontAwesomeIcons.user,
@@ -103,27 +101,29 @@ class _CreateCommunityScreenState extends State<CreateCommunityScreen> {
               Container(
                 width: double.infinity,
                 height: 60,
-                child: ElevatedButton(
-                  child: Text(Texts.addPhotograph, style: TextStyle(fontSize: 15),),
-                  onPressed: ()=> pickImage(),
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.white,
+                child: SizedBox(
+                  child: ElevatedButton(
+                    child: Text(Texts.addPhotograph, style: TextStyle(fontSize: 15),),
+                    onPressed: ()=> pickImage(),
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.white,
+                    ),
                   ),
                 ),
               ),
               WhiteSpaceVertical(factor: 5,),
               ButtonWithIcon(
-                  title: Texts.signUp,
+                  title: Texts.create,
                   onPressed: (){
                     if(communityNameController.text.isNotEmpty && descriptionController.text.isNotEmpty && communityImage != null){
                       CreateCommunity(
-                        CommunityCreateDto(
-                          description: descriptionController.text,
-                          name: communityNameController.text,
-                          cityId: int.parse(cityDropdownValue),
-                          countryId: int.parse(countryDropdownValue),
-                          imagePath: communityImage.path,
-                        ), communityImage
+                          CommunityCreateDto(
+                            description: descriptionController.text,
+                            name: communityNameController.text,
+                            cityId: int.parse(cityDropdownValue),
+                            countryId: int.parse(countryDropdownValue),
+                            imagePath: communityImage.path,
+                          ), communityImage
                       );
                     }
                     else{
@@ -135,6 +135,20 @@ class _CreateCommunityScreenState extends State<CreateCommunityScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  CreateCommunityImage(){
+    return ClipOval(
+        child: Container(
+            width: 100,
+            height: 100,
+            color: Colors.white,
+          child: IconButton(
+            icon: Icon(Icons.camera_alt, size: 35, color: Colors.grey,),
+            onPressed: () => pickImage()
+          ),
+        )
     );
   }
 
@@ -151,12 +165,12 @@ class _CreateCommunityScreenState extends State<CreateCommunityScreen> {
             selectedItemBuilder: (_) {
               return countryList
                   .map((e) => Container(
-                    alignment: Alignment.center,
-                    child: Text(
-                      e.name,
-                      style: TextStyle(color: Colors.black),
-                    ),
-                  )).toList();
+                alignment: Alignment.center,
+                child: Text(
+                  e.name,
+                  style: TextStyle(color: Colors.black),
+                ),
+              )).toList();
             },
             hint: Text("Ülke seç", style: TextStyle(color: Colors.black),),
             value: countryDropdownValue,
@@ -198,12 +212,12 @@ class _CreateCommunityScreenState extends State<CreateCommunityScreen> {
             selectedItemBuilder: (_) {
               return cityList
                   .map((e) => Container(
-                      alignment: Alignment.center,
-                      child: Text(
-                        e.name,
-                        style: TextStyle(color: Colors.black),
-                      ),
-                    )).toList();
+                alignment: Alignment.center,
+                child: Text(
+                  e.name,
+                  style: TextStyle(color: Colors.black),
+                ),
+              )).toList();
             },
             hint: Text("Şehir seç", style: TextStyle(color: Colors.black),),
             value: cityDropdownValue,
@@ -234,6 +248,7 @@ class _CreateCommunityScreenState extends State<CreateCommunityScreen> {
 
   AppBar CreateAppBar() {
     return AppBar(
+      title: Text(Texts.createCommunity),
     );
   }
 }

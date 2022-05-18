@@ -123,6 +123,7 @@ class _HomeScreenState extends State<HomeScreen> {
           DrawerHeaderItem(context, FontAwesomeIcons.user, Texts.myProfile, () => Navigator.pushNamed(context, userProfileRoute, arguments: widget.user)),
           DrawerHeaderItem(context, FontAwesomeIcons.comment, Texts.messages, (){}),
           DrawerHeaderItem(context, FontAwesomeIcons.calendar, Texts.events, () => Navigator.pushNamed(context, eventsListRoute)),
+          DrawerHeaderItem(context, FontAwesomeIcons.calendarCheck, Texts.createEvent, () => Navigator.pushNamed(context, createEventRoute).then((value) => setState((){}))),
           DrawerHeaderItem(context, FontAwesomeIcons.userGroup, Texts.communities, () => Navigator.pushNamed(context, communityListRoute)),
           DrawerHeaderItem(context, FontAwesomeIcons.userPlus, Texts.createCommunity, () => Navigator.pushNamed(context, createCommunityRoute).then((value) => setState((){}))),
           DrawerHeaderItem(context, FontAwesomeIcons.heart, Texts.areasOfInterest, () => Navigator.pushNamed(context, interestsRoute)),
@@ -266,6 +267,7 @@ class _HomeScreenState extends State<HomeScreen> {
       builder: (BuildContext context, AsyncSnapshot<EventBase> snapshot){
         if(!snapshot.hasData) return const Center(child: SizedBox(width:50, height:50 ,child: CircularProgressIndicator()));
         List<Event> eventList = snapshot.data.data;
+        if(eventList.isEmpty) return Center(child: Text(Texts.eventsNotFound));
 
         return ListView.separated(
           scrollDirection: Axis.horizontal,
@@ -325,6 +327,7 @@ class _HomeScreenState extends State<HomeScreen> {
       builder: (BuildContext context, AsyncSnapshot<EventBase> snapshot){
         if(!snapshot.hasData) return const Center(child: SizedBox(width:50, height:50 ,child: CircularProgressIndicator()));
         List<Event> eventList = snapshot.data.data;
+        if(eventList.isEmpty) return Center(child: Text(Texts.eventsNotFound));
 
         eventList.sort((event, event1) => event1.startDate.compareTo(event.startDate));
 
@@ -386,6 +389,7 @@ class _HomeScreenState extends State<HomeScreen> {
       builder: (BuildContext context, AsyncSnapshot<CommunityBase> snapshot){
         if(!snapshot.hasData) return const Center(child: SizedBox(width:50, height:50 ,child: CircularProgressIndicator()));
         List<Community> communityList = snapshot.data.data;
+        if(communityList.isEmpty) return Center(child: Text(Texts.communitiesNotFound));
 
         return ListView.separated(
           scrollDirection: Axis.horizontal,

@@ -1,6 +1,8 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:event_app/Constants/Texts.dart';
 import 'package:event_app/Helpers/ToastHelper.dart';
+import 'package:event_app/Models/EventCreateDto.dart';
 import 'package:event_app/Models/EventFeedComment.dart';
 import 'package:event_app/Models/EventSponsor.dart';
 import 'package:event_app/Models/SharePost.dart';
@@ -12,6 +14,37 @@ import 'package:http/http.dart' as http;
 import 'package:event_app/Models/Event.dart';
 import 'package:event_app/Constants/API.dart' as api;
 import 'package:shared_preferences/shared_preferences.dart';
+
+Future<void> MultiPartRequestEvents(String requestUri, String imagePath) async{
+  SharedPreferences _preferences = await SharedPreferences.getInstance();
+  String token = _preferences.getString("apiToken");
+
+  Map<String, String> headers = {
+    'Content-Type': 'multipart/form-data',
+    'Authorization' : 'Bearer $token'
+  };
+
+  final request = await http.MultipartRequest(
+      'POST',
+      Uri.parse(requestUri)
+  )
+    ..headers.addAll(headers)
+    ..files.add(await http.MultipartFile.fromPath('files', imagePath));
+
+  var response = await request.send();
+
+  if(response.statusCode == 200){
+    ToastHelper().makeToastMessage("Başarılı");
+  }else if(response.statusCode == 401){
+    ToastHelper().makeToastMessage(Texts.notAuthorized);
+  }else{
+    var responseString = await response.stream.bytesToString();
+    final decodedMap = json.decode(responseString);
+    print(decodedMap);
+
+    print("CommunitiesService, ${response.statusCode}");
+  }
+}
 
 Future<EventBase> GetRequestEvents(String requestUri) async{
   SharedPreferences _preferences = await SharedPreferences.getInstance();
@@ -34,7 +67,7 @@ Future<EventBase> GetRequestEvents(String requestUri) async{
 }
 
 Future<EventBase> GetAllEvents() async{
-  String requestUri = "${api.BaseURL}/events/";
+  String requestUri = "${api.BaseURL}/events";
   return GetRequestEvents(requestUri);
 }
 
@@ -66,4 +99,28 @@ Future<EventFeedCommentBase> GetEventFeedComment(int eventId, int feedId) async{
 NetworkImage GetEventImage(int eventId){
   String requestUri = "${api.BaseURL}/events/$eventId/image";
   return NetworkImage(requestUri);
+}
+
+void CreateEvent(EventCreateDto event, File image) async{
+  String requestUri = "${api.BaseURL}/events?"
+      "name=${event.name}&"
+      "description=${event.description}&"
+      "address=${event.address}&"
+      "startDate=${event.startDate}&"
+      "endDate=${event.endDate}&"
+      "isOnline=${event.isOnline}&"
+      "onlineLink=${event.onlineLink}&"
+      "isOver=${event.isOver}&"
+      "imagePath=${event.imagePath}&"
+      "communityID=${event.communityId}&"
+      "eventTypeID=${event.eventTypeId}&"
+      "languageID=${event.languageId}&"
+      "participationTypeId=${event.participationTypeId}&"
+      "cityId=${event.cityId}&"
+      "countryId=${event.countryId}&"
+      "interestId=${event.interestId}";
+
+  print(requestUri);
+
+  return MultiPartRequestEvents(requestUri, image.path);
 }

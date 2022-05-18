@@ -52,4 +52,12 @@ class Texts{
   static String description = "Açıklama";
   static String communityName = "Topluluk Adı";
   static String addPhotograph = "Fotoğraf Ekle";
+  static String createEvent = "Etkinlik Oluştur";
+  static String eventName = "Etkinlik Adı";
+  static String pickDate = "Tarih seçin.";
+  static String pickStartDate = "Başlangıç tarihi seçin.";
+  static String pickEndDate = "Bitiş tarihi seçin.";
+  static String online = "Online";
+  static String create = "Oluştur";
+  static String onlineLink = "Link";
 }

@@ -3,6 +3,7 @@ import 'package:event_app/Screens/CommunitiesListScreen.dart';
 import 'package:event_app/Screens/CommunityScreen.dart';
 import 'package:event_app/Screens/CompanyScreen.dart';
 import 'package:event_app/Screens/CreateCommunityScreen.dart';
+import 'package:event_app/Screens/CreateEventScreen.dart';
 import 'package:event_app/Screens/EventDetailDetailTabScreen.dart';
 import 'package:event_app/Screens/EventDetailScreen.dart';
 import 'package:event_app/Screens/EventSponsorsScreen.dart';
@@ -34,6 +35,7 @@ class Router{
       case communityRoute: return MaterialPageRoute(builder: (context) => CommunityScreen(community: settings.arguments,));
       case communityListRoute: return MaterialPageRoute(builder: (context) => CommunitiesListScreen());
       case createCommunityRoute: return MaterialPageRoute(builder: (context) => CreateCommunityScreen());
+      case createEventRoute: return MaterialPageRoute(builder: (context) => CreateEventScreen());
       default:
         return MaterialPageRoute(builder: (context) => NotFoundScreen());
     }

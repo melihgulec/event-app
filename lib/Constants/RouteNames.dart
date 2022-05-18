@@ -12,3 +12,4 @@ const companyRoute = "company";
 const communityRoute = "community";
 const communityListRoute = "communities";
 const createCommunityRoute = "createCommunity";
+const createEventRoute = "createEvent";
