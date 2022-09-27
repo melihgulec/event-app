@@ -21,8 +21,6 @@ Future<UserBase> GetRequestUsers(String requestUri) async{
       }
   );
 
-  print("STATÜ KODU : ${response.statusCode}");
-
   if(response.statusCode == 200){
     return UserBase.fromJson(jsonDecode(response.body));
   }else if(response.statusCode == 401){
@@ -55,6 +53,11 @@ Future<UserFollowerBase> GetRequestUserFollowers(String requestUri) async{
 Future<UserFollowerBase> GetUserFollowers(int userId) async{
   String requestUri = "${api.BaseURL}/users/$userId/followers";
   return GetRequestUserFollowers(requestUri);
+}
+
+Future<UserBase> GetUser(int userId) async{
+  String requestUri = "${api.BaseURL}/users/$userId";
+  return GetRequestUsers(requestUri);
 }
 
 Future<UserFollowerBase> GetUserFollows(int userId) async{

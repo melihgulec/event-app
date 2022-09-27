@@ -76,6 +76,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     containerTitle: Texts.onlineEvents,
                     containerInteractionText: Texts.all,
                     titlePadding: EdgeInsets.symmetric(horizontal: contentHorizontalPadding),
+                    containerIntercationTextOnPressed: () {
+                      Navigator.pushNamed(context, eventsListRoute);
+                    },
                     child: SizedBox(
                         width: double.infinity,
                         height: 312,
@@ -87,6 +90,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     containerTitle: Texts.upcomingEvents,
                     containerInteractionText: Texts.all,
                     titlePadding: EdgeInsets.symmetric(horizontal: contentHorizontalPadding),
+                    containerIntercationTextOnPressed: () {
+                      Navigator.pushNamed(context, eventsListRoute);
+                    },
                     child: SizedBox(
                         width: double.infinity,
                         height: 312,
@@ -98,6 +104,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     containerTitle: Texts.communities,
                     containerInteractionText: Texts.all,
                     titlePadding: EdgeInsets.symmetric(horizontal: contentHorizontalPadding),
+                    containerIntercationTextOnPressed: () {
+                      Navigator.pushNamed(context, communityListRoute);
+                    },
                     child: SizedBox(
                         width: double.infinity,
                         height: 312,
@@ -121,14 +130,14 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           CreateDrawerHeader(),
           DrawerHeaderItem(context, FontAwesomeIcons.user, Texts.myProfile, () => Navigator.pushNamed(context, userProfileRoute, arguments: widget.user)),
-          DrawerHeaderItem(context, FontAwesomeIcons.comment, Texts.messages, (){}),
+          DrawerHeaderItem(context, FontAwesomeIcons.comment, Texts.messages, () => Navigator.pushNamed(context, userMessagesRoute, arguments: widget.user)),
           DrawerHeaderItem(context, FontAwesomeIcons.calendar, Texts.events, () => Navigator.pushNamed(context, eventsListRoute)),
           DrawerHeaderItem(context, FontAwesomeIcons.calendarCheck, Texts.createEvent, () => Navigator.pushNamed(context, createEventRoute).then((value) => setState((){}))),
           DrawerHeaderItem(context, FontAwesomeIcons.userGroup, Texts.communities, () => Navigator.pushNamed(context, communityListRoute)),
           DrawerHeaderItem(context, FontAwesomeIcons.userPlus, Texts.createCommunity, () => Navigator.pushNamed(context, createCommunityRoute).then((value) => setState((){}))),
           DrawerHeaderItem(context, FontAwesomeIcons.heart, Texts.areasOfInterest, () => Navigator.pushNamed(context, interestsRoute)),
-          DrawerHeaderItem(context, FontAwesomeIcons.bookmark, Texts.favorites, (){}),
-          DrawerHeaderItem(context, FontAwesomeIcons.wrench, Texts.settings, (){}),
+          //DrawerHeaderItem(context, FontAwesomeIcons.bookmark, Texts.favorites, (){}),
+          //DrawerHeaderItem(context, FontAwesomeIcons.wrench, Texts.settings, (){}),
           DrawerHeaderItem(context, FontAwesomeIcons.minus, Texts.logout, () => Navigator.popAndPushNamed(context, loginRoute)),
         ],
       ),

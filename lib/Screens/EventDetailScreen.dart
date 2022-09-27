@@ -1,3 +1,4 @@
+import 'package:event_app/Constants/RouteNames.dart';
 import 'package:event_app/Constants/Texts.dart';
 import 'package:event_app/Helpers/SizeConfig.dart';
 import 'package:event_app/Models/Event.dart';
@@ -72,6 +73,14 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
       floating: true,
       pinned: true,
       title: Text(Texts.eventDetails),
+      actions: [
+        IconButton(
+          icon: Icon(Icons.edit),
+          onPressed: (){
+            Navigator.pushNamed(context, eventEditRoute, arguments: widget.event);
+          },
+        )
+      ],
     );
   }
 }

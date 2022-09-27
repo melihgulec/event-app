@@ -16,6 +16,8 @@ class Texts{
   static String myProfile = "Profilim";
   static String messages = "Mesajlar";
   static String events = "Etkinlikler";
+  static String editEvent = "Etkinliği Düzenle";
+  static String deleteEvent = "Etkinliği Sil";
   static String areasOfInterest = "İlgi Alanları";
   static String favorites = "Favoriler";
   static String settings = "Ayarlar";

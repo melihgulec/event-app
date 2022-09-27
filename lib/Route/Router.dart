@@ -1,3 +1,7 @@
+import 'package:event_app/Screens/EditEventScreen.dart';
+import 'package:event_app/Screens/SendMessageScreen.dart';
+import 'package:event_app/Screens/UserMessagesScreen.dart';
+import 'package:flutter/material.dart';
 import 'package:event_app/Constants/RouteNames.dart';
 import 'package:event_app/Screens/CommunitiesListScreen.dart';
 import 'package:event_app/Screens/CommunityScreen.dart';
@@ -11,7 +15,6 @@ import 'package:event_app/Screens/EventsListScreen.dart';
 import 'package:event_app/Screens/InterestsScreen.dart';
 import 'package:event_app/Screens/ProfileShareScreen.dart';
 import 'package:event_app/Screens/UserProfileScreen.dart';
-import 'package:flutter/material.dart';
 import 'package:event_app/Screens/LoginScreen.dart';
 import 'package:event_app/Screens/SignUpScreen.dart';
 import 'package:event_app/Screens/HomeScreen.dart';
@@ -27,6 +30,7 @@ class Router{
       case eventDetailRoute: return MaterialPageRoute(builder: (context) => EventDetailScreen(event: settings.arguments,));
       case eventDetailTabRoute: return MaterialPageRoute(builder: (context) => EventDetailDetailTabScreen(event: settings.arguments,));
       case eventSponsorsRoute: return MaterialPageRoute(builder: (context) => EventSponsorsScreen(event: settings.arguments,));
+      case eventEditRoute: return MaterialPageRoute(builder: (context) => EditEventScreen(event: settings.arguments,));
       case interestsRoute: return MaterialPageRoute(builder: (context) => InterestsScreen());
       case eventsListRoute: return MaterialPageRoute(builder: (context) => EventsListScreen(interest: settings.arguments,));
       case userProfileRoute: return MaterialPageRoute(builder: (context) => ProfileScreen(user: settings.arguments,));
@@ -36,6 +40,8 @@ class Router{
       case communityListRoute: return MaterialPageRoute(builder: (context) => CommunitiesListScreen());
       case createCommunityRoute: return MaterialPageRoute(builder: (context) => CreateCommunityScreen());
       case createEventRoute: return MaterialPageRoute(builder: (context) => CreateEventScreen());
+      case sendMessageRoute: return MaterialPageRoute(builder: (context) => SendMessageScreen(user: settings.arguments,));
+      case userMessagesRoute: return MaterialPageRoute(builder: (context) => UserMessagesScreen(user: settings.arguments,));
       default:
         return MaterialPageRoute(builder: (context) => NotFoundScreen());
     }

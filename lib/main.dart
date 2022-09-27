@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:event_app/Theme/Theme.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:event_app/Constants/RouteNames.dart';
 import 'package:event_app/Route/Router.dart' as AppRouter;
@@ -13,13 +14,15 @@ class MyHttpOverrides extends HttpOverrides {
       ..badCertificateCallback =
           (X509Certificate cert, String host, int port) => true; }}
 
-void main() {
+void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   HttpOverrides.global = new MyHttpOverrides();
+  await Firebase.initializeApp();
   runApp(MainScreen());
 }
 
 class MainScreen extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     initializeDateFormatting("tr_TR");

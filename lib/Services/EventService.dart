@@ -46,6 +46,49 @@ Future<void> MultiPartRequestEvents(String requestUri, String imagePath) async{
   }
 }
 
+Future<void> PutRequestEvent(String requestUri, String body) async{
+  SharedPreferences _preferences = await SharedPreferences.getInstance();
+  String token = _preferences.getString("apiToken");
+
+  final response = await http.put(
+      Uri.parse(requestUri),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization" : "Bearer $token"
+      },
+      body: body
+  );
+  if(response.statusCode == 200){
+    Map json = jsonDecode(response.body);
+    ToastHelper().makeToastMessage(json["message"]);
+  }else if(response.statusCode == 401){
+    ToastHelper().makeToastMessage(Texts.notAuthorized);
+  }else{
+    print("EventService, ${response.statusCode}");
+  }
+}
+
+Future<void> DeleteRequestEvent(String requestUri) async{
+  SharedPreferences _preferences = await SharedPreferences.getInstance();
+  String token = _preferences.getString("apiToken");
+
+  final response = await http.delete(
+      Uri.parse(requestUri),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization" : "Bearer $token"
+      },
+  );
+  if(response.statusCode == 200){
+    Map json = jsonDecode(response.body);
+    ToastHelper().makeToastMessage(json["message"]);
+  }else if(response.statusCode == 401){
+    ToastHelper().makeToastMessage(Texts.notAuthorized);
+  }else{
+    print("EventService, ${response.statusCode}");
+  }
+}
+
 Future<EventBase> GetRequestEvents(String requestUri) async{
   SharedPreferences _preferences = await SharedPreferences.getInstance();
   String token = _preferences.getString("apiToken");
@@ -123,4 +166,16 @@ void CreateEvent(EventCreateDto event, File image) async{
   print(requestUri);
 
   return MultiPartRequestEvents(requestUri, image.path);
+}
+
+void UpdateEvent(EventCreateDto updatedEvent, Event event) async{
+  String requestUri = "${api.BaseURL}/events/${event.id}";
+  String encoded = jsonEncode(updatedEvent);
+
+  return PutRequestEvent(requestUri, encoded);
+}
+
+void DeleteEvent(Event event) async{
+  String requestUri = "${api.BaseURL}/events/${event.id}";
+  return DeleteRequestEvent(requestUri);
 }

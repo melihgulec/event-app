@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:event_app/Components/ButtonWithIcon.dart';
+import 'package:event_app/Constants/RouteNames.dart';
 import 'package:event_app/Constants/Texts.dart';
 import 'package:event_app/Helpers/SizeConfig.dart';
 import 'package:event_app/Models/User.dart';
@@ -43,6 +44,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     SizeConfig().init(context);
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: DefaultTabController(
         length: 2,
         child: NestedScrollView(
@@ -211,7 +213,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             hasSuffixIcon: false,
             prefixIcon: FontAwesomeIcons.comment,
             onPressed: (){
-
+              Navigator.pushNamed(context, sendMessageRoute, arguments: widget.user);
             },
           ),
         ),

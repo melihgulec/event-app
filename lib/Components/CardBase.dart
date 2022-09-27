@@ -113,12 +113,14 @@ class CardBase extends StatelessWidget {
               children: [
                 const Icon(FontAwesomeIcons.locationDot, color: Colors.grey,),
                 const SizedBox(width: 5,),
-                Text(
-                  address,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                    color: Colors.grey,
-                    fontWeight: FontWeight.w300
+                Expanded(
+                  child: Text(
+                    address,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                        color: Colors.grey,
+                        fontWeight: FontWeight.w300
+                    ),
                   ),
                 )
               ],

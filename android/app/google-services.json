@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "706580666120",
+    "project_id": "eventapp-4636c",
+    "storage_bucket": "eventapp-4636c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:706580666120:android:f64089231fff32a181bebd",
+        "android_client_info": {
+          "package_name": "com.Rouvie.event_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "706580666120-kj2iiknmfgqm1vfv1urujn8jg56dbtrk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCCDb2aqXiA6fobysm_iMW6LybPQ56wgas"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "706580666120-kj2iiknmfgqm1vfv1urujn8jg56dbtrk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

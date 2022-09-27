@@ -10,6 +10,7 @@ class ContainerWithTitle extends StatelessWidget {
   double width;
   double height;
   EdgeInsets titlePadding;
+  Function containerIntercationTextOnPressed;
 
   ContainerWithTitle({
     Key key,
@@ -18,7 +19,8 @@ class ContainerWithTitle extends StatelessWidget {
     this.child,
     this.width,
     this.height,
-    this.titlePadding = EdgeInsets.zero
+    this.titlePadding = EdgeInsets.zero,
+    this.containerIntercationTextOnPressed,
   }) : super(key: key);
 
   @override
@@ -43,11 +45,14 @@ class ContainerWithTitle extends StatelessWidget {
                 ),
                 Row(
                   children: [
-                    Text(
-                      containerInteractionText,
-                      style: const TextStyle(
-                        fontSize: 17,
-                        color: Colors.grey
+                    TextButton(
+                      onPressed: containerIntercationTextOnPressed,
+                      child: Text(
+                        containerInteractionText,
+                        style: const TextStyle(
+                            fontSize: 17,
+                            color: Colors.grey
+                        ),
                       ),
                     ),
                     Icon(FontAwesomeIcons.chevronRight, color: Theme.of(context).primaryIconTheme.color, size: 12,)
