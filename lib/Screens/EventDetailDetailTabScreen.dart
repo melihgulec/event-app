@@ -14,8 +14,9 @@ import 'package:intl/intl.dart';
 
 class EventDetailDetailTabScreen extends StatefulWidget {
   Event event;
+  bool isAuthorized;
 
-  EventDetailDetailTabScreen({Key key, this.event}) : super(key: key);
+  EventDetailDetailTabScreen({Key key, this.event, this.isAuthorized}) : super(key: key);
 
   @override
   State<EventDetailDetailTabScreen> createState() => _EventDetailDetailTabScreenState();
@@ -23,6 +24,10 @@ class EventDetailDetailTabScreen extends StatefulWidget {
 
 class _EventDetailDetailTabScreenState extends State<EventDetailDetailTabScreen> {
   EdgeInsets pagePadding = EdgeInsets.symmetric(vertical: 24, horizontal: 24);
+  
+  navigateEditScheduleScreen(EventSchedule eventSchedule){
+    Navigator.pushNamed(context, editEventScheduleRoute, arguments: [eventSchedule, widget.event]).then((value) => setState((){}));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -88,7 +93,7 @@ class _EventDetailDetailTabScreenState extends State<EventDetailDetailTabScreen>
                   Texts.eventFlow,
                   style: Theme.of(context).textTheme.headline5,
                 ),
-                ElevatedButton(
+                if(widget.isAuthorized) ElevatedButton(
                   child: Text(Texts.add, style: TextStyle(color: Colors.white)),
                   onPressed: (){
                     Navigator.pushNamed(context, createEventScheduleRoute, arguments: widget.event).then((value) => setState((){}));
@@ -96,12 +101,17 @@ class _EventDetailDetailTabScreenState extends State<EventDetailDetailTabScreen>
                 )
               ],
             ),
+            WhiteSpaceVertical(),
             FutureBuilder<EventScheduleBase>(
               future: GetEventSchedule(widget.event.id),
               builder: (BuildContext context, AsyncSnapshot<EventScheduleBase> snapshot){
                 if(!snapshot.hasData) return CircularProgressIndicator();
 
-                List<EventSchedule> eventSchedule = snapshot.data.data;
+                List<EventSchedule> eventSchedules = snapshot.data.data;
+
+                if(eventSchedules.length == 0) return Container( width: SizeConfig.screenWidth, child: Text(Texts.schedulesNotFound, textAlign: TextAlign.start,));
+
+                eventSchedules.sort((a, b) => a.startDate.compareTo(b.endDate));
 
                 return ListView.separated(
                   physics: NeverScrollableScrollPhysics(),
@@ -109,14 +119,17 @@ class _EventDetailDetailTabScreenState extends State<EventDetailDetailTabScreen>
                     return WhiteSpaceVertical();
                   },
                   shrinkWrap: true,
-                  itemCount: eventSchedule.length,
+                  itemCount: eventSchedules.length,
                   itemBuilder: (context, index){
-                    EventSchedule item = eventSchedule[index];
+                    EventSchedule eventSchedule = eventSchedules[index];
 
                     return FlowCard(
-                      startDate: item.startDate,
-                      endDate: item.endDate,
-                      description: item.description
+                      onTap: (){
+                        navigateEditScheduleScreen(eventSchedule);
+                      },
+                      startDate: eventSchedule.startDate,
+                      endDate: eventSchedule.endDate,
+                      description: eventSchedule.description
                     );
                   },
                 );

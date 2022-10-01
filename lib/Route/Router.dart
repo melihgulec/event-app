@@ -1,5 +1,6 @@
 import 'package:event_app/Screens/CreateEventScheduleScreen.dart';
 import 'package:event_app/Screens/EditCommunityScreen.dart';
+import 'package:event_app/Screens/EditEventScheduleScreen.dart';
 import 'package:event_app/Screens/EditEventScreen.dart';
 import 'package:event_app/Screens/SendMessageScreen.dart';
 import 'package:event_app/Screens/UserMessagesScreen.dart';
@@ -33,7 +34,8 @@ class Router{
       case eventDetailTabRoute: return MaterialPageRoute(builder: (context) => EventDetailDetailTabScreen(event: settings.arguments,));
       case eventSponsorsRoute: return MaterialPageRoute(builder: (context) => EventSponsorsScreen(event: settings.arguments,));
       case eventEditRoute: return MaterialPageRoute(builder: (context) => EditEventScreen(event: settings.arguments,));
-      case createEventScheduleRoute: return MaterialPageRoute(builder: (context) => CreateEventScheduleScreen(event: settings.arguments,));
+      case createEventScheduleRoute: return MaterialPageRoute(builder: (context) => CreateEventScheduleScreen(event: settings.arguments));
+      case editEventScheduleRoute: return MaterialPageRoute(builder: (context) => EditEventScheduleScreen(eventSchedule: args[0], event: args[1],));
       case interestsRoute: return MaterialPageRoute(builder: (context) => InterestsScreen());
       case eventsListRoute: return MaterialPageRoute(builder: (context) => EventsListScreen(interest: settings.arguments,));
       case userProfileRoute: return MaterialPageRoute(builder: (context) => ProfileScreen(user: settings.arguments,));

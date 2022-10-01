@@ -18,3 +18,4 @@ const createEventRoute = "createEvent";
 const sendMessageRoute = "sendMessage";
 const userMessagesRoute = "userMessages";
 const createEventScheduleRoute = "createEventSchedule";
+const editEventScheduleRoute = "editEventSchedule";

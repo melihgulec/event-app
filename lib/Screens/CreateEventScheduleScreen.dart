@@ -5,6 +5,7 @@ import 'package:event_app/Components/TextFieldWithIcon.dart';
 import 'package:event_app/Components/WhiteSpaceVertical.dart';
 import 'package:event_app/Constants/Texts.dart';
 import 'package:event_app/Helpers/SizeConfig.dart';
+import 'package:event_app/Helpers/ToastHelper.dart';
 import 'package:event_app/Models/Event.dart';
 import 'package:event_app/Models/EventSchedule.dart';
 import 'package:event_app/Services/EventScheduleService.dart';
@@ -12,8 +13,9 @@ import 'package:flutter/material.dart';
 
 class CreateEventScheduleScreen extends StatefulWidget {
   Event event;
+  bool isAuthorized;
 
-  CreateEventScheduleScreen({Key key, this.event}) : super(key: key);
+  CreateEventScheduleScreen({Key key, this.event, this.isAuthorized}) : super(key: key);
 
   @override
   State<CreateEventScheduleScreen> createState() =>
@@ -33,19 +35,24 @@ class _CreateEventScheduleScreenState extends State<CreateEventScheduleScreen> {
   int startIndex = 0;
 
   addEventSchedules() {
-    setState(() {
-      eventSchedules.add(EventSchedule(
-          id: startIndex,
-          startDate: startDate.text,
-          endDate: endDate.text,
-          description: descriptionController.text));
+    if(startDate.text.isNotEmpty && endDate.text.isNotEmpty && descriptionController.text.isNotEmpty){
+      setState(() {
+        eventSchedules.add(EventSchedule(
+            id: startIndex,
+            startDate: startDate.text,
+            endDate: endDate.text,
+            description: descriptionController.text));
 
-      startDate.clear();
-      endDate.clear();
-      descriptionController.clear();
+        startDate.clear();
+        endDate.clear();
+        descriptionController.clear();
 
-      startIndex++;
-    });
+        startIndex++;
+      });
+    }
+    else{
+      ToastHelper().makeToastMessage(Texts.allFieldsMustBeFilled);
+    }
   }
 
   deleteEventSchedule(EventSchedule eventSchedule) {

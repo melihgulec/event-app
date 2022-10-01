@@ -24,6 +24,7 @@ class EventDetailScreen extends StatefulWidget {
 class _EventDetailScreenState extends State<EventDetailScreen> {
   TabController _tabController;
   SharedPreferences _preferences;
+  bool isAuthorizedRoute = false;
 
   getPrefs() async{
     _preferences = await SharedPreferences.getInstance();
@@ -34,6 +35,20 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
     getPrefs();
     // TODO: implement initState
     super.initState();
+    UserAuthorizeControl();
+  }
+
+  Future UserAuthorizeControl() async{
+    UserEventRoleBase userEventRoleBase = await GetEventRoles(widget.event.id);
+    List<UserEventRole> userEventRole = userEventRoleBase.data;
+
+    var isUserAuthorized = userEventRole.where((element) => element.user.id == _preferences.getInt("sessionUserId"));
+
+    if(isUserAuthorized.length > 0 && (isUserAuthorized.first.role.id == RolesEnum.toplulukYoneticisi.name || isUserAuthorized.first.role.id == RolesEnum.organizator.name)){
+      setState(() {
+        isAuthorizedRoute = true;
+      });
+    }
   }
 
   @override
@@ -73,7 +88,7 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
           },
           body: TabBarView(
             children: [
-              EventDetailDetailTabScreen(event: widget.event,),
+              EventDetailDetailTabScreen(event: widget.event, isAuthorized: isAuthorizedRoute),
               EventSponsorsScreen(event: widget.event,),
               EventSharesScreen(event: widget.event,),
             ],
@@ -90,25 +105,10 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
       pinned: true,
       title: Text(Texts.eventDetails),
       actions: [
-        FutureBuilder<UserEventRoleBase>(
-          future: GetEventRoles(widget.event.id),
-          builder: (BuildContext context, AsyncSnapshot<UserEventRoleBase> snapshot){
-            if(!snapshot.hasData) return const CircularProgressIndicator();
-
-            List<UserEventRole> userEventRole = snapshot.data.data;
-
-            var isUserAuthorized = userEventRole.where((element) => element.user.id == _preferences.getInt("sessionUserId"));
-
-            if(isUserAuthorized.length > 0 && (isUserAuthorized.first.role.id == RolesEnum.toplulukYoneticisi.name || isUserAuthorized.first.role.id == RolesEnum.organizator.name)){
-              return IconButton(
-                icon: Icon(Icons.edit),
-                onPressed: (){
-                  Navigator.pushNamed(context, eventEditRoute, arguments: widget.event).then((value) => setState((){}));
-                },
-              );
-            }
-
-            return Text('');
+        if(isAuthorizedRoute) IconButton(
+          icon: Icon(Icons.edit),
+          onPressed: (){
+            Navigator.pushNamed(context, eventEditRoute, arguments: widget.event).then((value) => setState((){}));
           },
         )
       ],

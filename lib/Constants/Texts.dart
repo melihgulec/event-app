@@ -19,8 +19,12 @@ class Texts{
   static String editEvent = "Etkinliği Düzenle";
   static String deleteEvent = "Etkinliği Sil";
   static String add = "Ekle";
+  static String edit = "Düzenle";
   static String send = "Gönder";
   static String createSchedule = "Akış Oluştur";
+  static String editSchedule = "Akışı Düzenle";
+  static String schedulesNotFound = "Akış bilgisi bulunamadı.";
+  static String deleteSchedule = "Akışı Sil";
   static String schedule = "Akış";
   static String addedScheduleBelow = "Eklenen akış aşağıda yer almaktadır.";
   static String areasOfInterest = "İlgi Alanları";
