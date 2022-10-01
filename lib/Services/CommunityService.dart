@@ -85,6 +85,49 @@ Future<void> PostRequestCommunities(String requestUri, String body) async{
   }
 }
 
+Future<void> PutRequestCommunities(String requestUri, String body) async{
+  SharedPreferences _preferences = await SharedPreferences.getInstance();
+  String token = _preferences.getString("apiToken");
+
+  final response = await http.put(
+      Uri.parse(requestUri),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization" : "Bearer $token"
+      },
+      body: body
+  );
+  if(response.statusCode == 200){
+    Map json = jsonDecode(response.body);
+    ToastHelper().makeToastMessage(json["message"]);
+  }else if(response.statusCode == 401){
+    ToastHelper().makeToastMessage(Texts.notAuthorized);
+  }else{
+    print("CommunitiesService, ${response.statusCode}");
+  }
+}
+
+Future<void> DeleteRequestCommunities(String requestUri) async{
+  SharedPreferences _preferences = await SharedPreferences.getInstance();
+  String token = _preferences.getString("apiToken");
+
+  final response = await http.delete(
+      Uri.parse(requestUri),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization" : "Bearer $token"
+      },
+  );
+  if(response.statusCode == 200){
+    Map json = jsonDecode(response.body);
+    ToastHelper().makeToastMessage(json["message"]);
+  }else if(response.statusCode == 401){
+    ToastHelper().makeToastMessage(Texts.notAuthorized);
+  }else{
+    print("CommunitiesService, ${response.statusCode}");
+  }
+}
+
 Future<CommunityBase> GetAllCommunities() async{
   String requestUri = "${api.BaseURL}/communities/";
   return GetRequestCommunities(requestUri);
@@ -95,8 +138,8 @@ Future<CommunityBase> GetCommunity(String communityId) async{
   return GetRequestCommunities(requestUri);
 }
 
-void CreateCommunity(CommunityCreateDto communityCreateDto, File image) async{
-  String requestUri = "${api.BaseURL}/communities?name=${communityCreateDto.name}&cityId=${communityCreateDto.cityId}&countryId=${communityCreateDto.countryId}&description=${communityCreateDto.description}&imagePath=${communityCreateDto.imagePath}";
+void CreateCommunity(CommunityCreateDto communityCreateDto, int userId, File image) async{
+  String requestUri = "${api.BaseURL}/communities?name=${communityCreateDto.name}&cityId=${communityCreateDto.cityId}&countryId=${communityCreateDto.countryId}&description=${communityCreateDto.description}&imagePath=${communityCreateDto.imagePath}&userId=${userId}";
   //Map<String, dynamic> body = jsonDecode(jsonEncode(communityCreateDto));
 
   Map<String, String> body = {
@@ -110,7 +153,20 @@ void CreateCommunity(CommunityCreateDto communityCreateDto, File image) async{
   return MultiPartRequestCommunities(requestUri, body, image.path);
 }
 
+void UpdateCommunity(CommunityCreateDto updatedCommunity, Community community) async{
+  String requestUri = "${api.BaseURL}/communities/${community.id}";
+  String encoded = jsonEncode(updatedCommunity);
+
+  return PutRequestCommunities(requestUri, encoded);
+}
+
+void DeleteCommunity(Community community) async{
+  String requestUri = "${api.BaseURL}/communities/${community.id}";
+  return DeleteRequestCommunities(requestUri);
+}
+
 NetworkImage GetCommunityImage(int comunityId){
   String requestUri = "${api.BaseURL}/communities/$comunityId/image";
   return NetworkImage(requestUri);
 }
+

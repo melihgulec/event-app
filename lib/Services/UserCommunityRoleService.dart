@@ -38,3 +38,7 @@ Future<UserCommunityRoleBase> GetAllUserCommunityRolesByRoleID(int userId, int r
   return GetRequestUserCommunityRoles(requestUri);
 }
 
+Future<UserCommunityRoleBase> GetAllUserCommunityRolesByCommunity(int communityId) async{
+  String requestUri = "${api.BaseURL}/user-community-roles/community/$communityId";
+  return GetRequestUserCommunityRoles(requestUri);
+}

@@ -3,9 +3,11 @@ import 'dart:io';
 import 'package:event_app/Components/ButtonWithIcon.dart';
 import 'package:event_app/Components/TextFieldWithIcon.dart';
 import 'package:event_app/Components/WhiteSpaceVertical.dart';
+import 'package:event_app/Constants/RouteNames.dart';
 import 'package:event_app/Constants/Texts.dart';
 import 'package:event_app/Helpers/ToastHelper.dart';
 import 'package:event_app/Models/City.dart';
+import 'package:event_app/Models/Community.dart';
 import 'package:event_app/Models/CommunityCreateDto.dart';
 import 'package:event_app/Models/Country.dart';
 import 'package:event_app/Services/CityService.dart';
@@ -14,18 +16,16 @@ import 'package:event_app/Services/CountryService.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-class CreateCommunityScreen extends StatefulWidget {
-  CreateCommunityScreen({
-    Key key,
-  }) : super(key: key);
+class EditCommunityScreen extends StatefulWidget {
+  Community community;
+  EditCommunityScreen({Key key, this.community}) : super(key: key);
 
   @override
-  State<CreateCommunityScreen> createState() => _CreateCommunityScreenState();
+  State<EditCommunityScreen> createState() => _EditCommunityScreenState();
 }
 
-class _CreateCommunityScreenState extends State<CreateCommunityScreen> {
+class _EditCommunityScreenState extends State<EditCommunityScreen> {
   double pagePadding = 26;
   TextEditingController communityNameController = TextEditingController(text: "");
   TextEditingController descriptionController = TextEditingController(text: "");
@@ -36,17 +36,16 @@ class _CreateCommunityScreenState extends State<CreateCommunityScreen> {
   String oldCityDropdownValue = "1";
 
   File communityImage;
-  SharedPreferences _preferences;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    getPrefs();
-  }
 
-  getPrefs() async{
-    _preferences = await SharedPreferences.getInstance();
+    communityNameController.text = widget.community.name;
+    descriptionController.text = widget.community.description;
+    countryDropdownValue = widget.community.country.id.toString();
+    cityDropdownValue = widget.community.city.id.toString();
   }
 
   Future pickImage() async{
@@ -69,8 +68,6 @@ class _CreateCommunityScreenState extends State<CreateCommunityScreen> {
           padding: EdgeInsets.symmetric(horizontal: pagePadding),
           child: Column(
             children: [
-              communityImage != null ? ClipOval(child: Image.file(communityImage, width: 100, height: 100, fit: BoxFit.cover,)) : CreateCommunityImage(),
-              WhiteSpaceVertical(factor: 5,),
               TextFieldWithIcon(
                 controller: communityNameController,
                 prefixIcon: FontAwesomeIcons.user,
@@ -102,38 +99,34 @@ class _CreateCommunityScreenState extends State<CreateCommunityScreen> {
                 ),
                 child: CreateCityDropdown(),
               ),
-              WhiteSpaceVertical(),
-              Container(
-                width: double.infinity,
-                height: 60,
-                child: SizedBox(
-                  child: ElevatedButton(
-                    child: Text(Texts.addPhotograph, style: TextStyle(fontSize: 15),),
-                    onPressed: ()=> pickImage(),
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.white,
-                    ),
-                  ),
-                ),
-              ),
               WhiteSpaceVertical(factor: 5,),
               ButtonWithIcon(
-                  title: Texts.create,
+                  title: Texts.communityEdit,
                   onPressed: (){
-                    if(communityNameController.text.isNotEmpty && descriptionController.text.isNotEmpty && communityImage != null){
-                      CreateCommunity(
+                    if(communityNameController.text.isNotEmpty && descriptionController.text.isNotEmpty){
+                      UpdateCommunity(
                           CommunityCreateDto(
-                            description: descriptionController.text,
-                            name: communityNameController.text,
-                            cityId: int.parse(cityDropdownValue),
-                            countryId: int.parse(countryDropdownValue),
-                            imagePath: communityImage.path,
-                          ), _preferences.getInt('sessionUserId'), communityImage
+                              countryId: int.parse(countryDropdownValue),
+                              cityId: int.parse(cityDropdownValue),
+                              imagePath: widget.community.imagePath,
+                              name: communityNameController.text,
+                              description: descriptionController.text,
+                          ),
+                          widget.community
                       );
                     }
                     else{
                       ToastHelper().makeToastMessage(Texts.allFieldsMustBeFilled);
                     }
+                  }
+              ),
+              WhiteSpaceVertical(),
+              ButtonWithIcon(
+                  title: Texts.communityDelete,
+                  onPressed: (){
+                    DeleteCommunity(widget.community);
+                    Navigator.pop(context);
+                    Navigator.pop(context);
                   }
               ),
             ],
@@ -146,12 +139,12 @@ class _CreateCommunityScreenState extends State<CreateCommunityScreen> {
   CreateCommunityImage(){
     return ClipOval(
         child: Container(
-            width: 100,
-            height: 100,
-            color: Colors.white,
+          width: 100,
+          height: 100,
+          color: Colors.white,
           child: IconButton(
-            icon: Icon(Icons.camera_alt, size: 35, color: Colors.grey,),
-            onPressed: () => pickImage()
+              icon: Icon(Icons.camera_alt, size: 35, color: Colors.grey,),
+              onPressed: () => pickImage()
           ),
         )
     );
@@ -253,7 +246,7 @@ class _CreateCommunityScreenState extends State<CreateCommunityScreen> {
 
   AppBar CreateAppBar() {
     return AppBar(
-      title: Text(Texts.createCommunity),
+      title: Text(Texts.communityEdit),
     );
   }
 }

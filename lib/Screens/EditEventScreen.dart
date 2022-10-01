@@ -139,7 +139,7 @@ class _EditEventScreenState extends State<EditEventScreen> {
                 ),
                 WhiteSpaceVertical(factor: 5,),
                 ButtonWithIcon(
-                    title: Texts.create,
+                    title: Texts.editEvent,
                     onPressed: (){
                       if(eventNameController.text.isNotEmpty && descriptionController.text.isNotEmpty){
                         UpdateEvent(
@@ -401,7 +401,7 @@ class _EditEventScreenState extends State<EditEventScreen> {
             if(!snapshot.hasData || snapshot.data.data.isEmpty) return Center(child: Text("Henüz bir toplulukta yetkiniz bulunmuyor.", style: TextStyle(color: Colors.black),));
 
             List<UserCommunityRole> userCommunityRoleList = snapshot.data.data;
-            userCommunityRoleDropdownValue = oldUserCommunityRoleDropdownValue == userCommunityRoleList.first.id.toString() ? userCommunityRoleDropdownValue : userCommunityRoleList.first.id.toString();
+            userCommunityRoleDropdownValue = oldUserCommunityRoleDropdownValue == userCommunityRoleList.first.community.id.toString() ? userCommunityRoleDropdownValue : userCommunityRoleList.first.community.id.toString();
 
             return DropdownButtonHideUnderline(
               child: DropdownButton<String>(

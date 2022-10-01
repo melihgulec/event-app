@@ -1,12 +1,17 @@
 import 'package:event_app/Components/ButtonWithIcon.dart';
 import 'package:event_app/Components/WhiteSpaceVertical.dart';
+import 'package:event_app/Constants/RolesEnum.dart';
+import 'package:event_app/Constants/RouteNames.dart';
 import 'package:event_app/Constants/Texts.dart';
 import 'package:event_app/Helpers/SizeConfig.dart';
 import 'package:event_app/Models/Community.dart';
+import 'package:event_app/Models/UserCommunityRoles.dart';
 import 'package:event_app/Screens/CommunitySharesScreen.dart';
 import 'package:event_app/Services/CommunityService.dart';
+import 'package:event_app/Services/UserCommunityRoleService.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CommunityScreen extends StatefulWidget {
   Community community;
@@ -21,6 +26,20 @@ class CommunityScreen extends StatefulWidget {
 }
 
 class _CommunityScreenState extends State<CommunityScreen> {
+  SharedPreferences _preferences;
+
+  Future<SharedPreferences> getPrefs() async{
+    _preferences = await SharedPreferences.getInstance();
+    return _preferences;
+  }
+
+  @override
+  void initState() {
+    getPrefs();
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -83,6 +102,36 @@ class _CommunityScreenState extends State<CommunityScreen> {
       floating: true,
       pinned: true,
       title: Text(Texts.community),
+      actions: [
+        FutureBuilder(
+          future: getPrefs(),
+          builder: (context, snapshot_){
+            if(!snapshot_.hasData) return const CircularProgressIndicator();
+
+            return FutureBuilder<UserCommunityRoleBase>(
+              future: GetAllUserCommunityRoles(_preferences.getInt("sessionUserId")),
+              builder: (BuildContext context, AsyncSnapshot<UserCommunityRoleBase> snapshot){
+                if(!snapshot.hasData) return const CircularProgressIndicator();
+
+                List<UserCommunityRole> roles = snapshot.data.data;
+
+                var isUserAuthorized = roles.where((element) => element.user.id == _preferences.getInt("sessionUserId") && element.community.id == widget.community.id);
+
+                if(isUserAuthorized.length > 0 && (isUserAuthorized.first.role.id == RolesEnum.toplulukYoneticisi.name || isUserAuthorized.first.role.id == RolesEnum.organizator.name)){
+                  return IconButton(
+                    icon: Icon(Icons.edit),
+                    onPressed: (){
+                      Navigator.pushNamed(context, communityEditRoute, arguments: widget.community);
+                    }
+                  );
+                }
+
+                return Text('');
+              },
+            );
+          },
+        )
+      ],
     );
   }
 

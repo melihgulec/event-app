@@ -30,7 +30,8 @@ class _UserMessagesScreenState extends State<UserMessagesScreen> {
           .collection("chatRooms")
           .snapshots(),
           builder: (context, snapshot){
-            if(!snapshot.hasData) return const Center(child: CircularProgressIndicator(),);
+            if(snapshot.connectionState == ConnectionState.waiting) return const Center(child: CircularProgressIndicator(),);
+
             List<DocumentSnapshot> items = snapshot.data.docs;
 
             Map<String, Map<String, String>> test = {};
@@ -68,9 +69,17 @@ class _UserMessagesScreenState extends State<UserMessagesScreen> {
                         .snapshots(),
                       builder: (context, snapshot){
                         if(snapshot.connectionState == ConnectionState.waiting) return const Center(child: CircularProgressIndicator(),);
+
                         List<DocumentSnapshot> items = snapshot.data.docs;
 
-                        String lastMessage = items.last["message"];
+                        String lastMessage = "";
+
+                        try{
+                          lastMessage = items.last["message"];
+                        }
+                        catch (e){
+                          lastMessage = "";
+                        }
 
                         return ListTile(
                           leading: ClipOval(

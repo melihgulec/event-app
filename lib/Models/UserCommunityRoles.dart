@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final userCommunityRoleBase = userCommunityRoleBaseFromJson(jsonString);
-
 import 'dart:convert';
 
 import 'package:event_app/Models/Community.dart';
@@ -38,10 +34,10 @@ class UserCommunityRoleBase {
 
 class UserCommunityRole {
   UserCommunityRole({
+    this.id,
     this.user,
     this.role,
     this.community,
-    this.id,
   });
 
   int id;

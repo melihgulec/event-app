@@ -18,6 +18,11 @@ class Texts{
   static String events = "Etkinlikler";
   static String editEvent = "Etkinliği Düzenle";
   static String deleteEvent = "Etkinliği Sil";
+  static String add = "Ekle";
+  static String send = "Gönder";
+  static String createSchedule = "Akış Oluştur";
+  static String schedule = "Akış";
+  static String addedScheduleBelow = "Eklenen akış aşağıda yer almaktadır.";
   static String areasOfInterest = "İlgi Alanları";
   static String favorites = "Favoriler";
   static String settings = "Ayarlar";
@@ -34,6 +39,7 @@ class Texts{
   static String eventAddress = "Etkinlik Adresi";
   static String communityOrganizingTheEvent = "Düzenleyen Topluluk";
   static String aboutEvent = "Etkinlik Hakkında";
+  static String eventFlow = "Akış";
   static String interests = "İlgi Alanları";
   static String eventsNotFound = "Etkinlikler bulunamadı.";
   static String notAuthorized = "401 - Yetkiniz yok.";
@@ -51,6 +57,8 @@ class Texts{
   static String community = "Topluluk";
   static String communitiesNotFound = "Topluluklar bulunamadı.";
   static String createCommunity = "Topluluğunu Oluştur";
+  static String communityEdit = "Topluluğu Düzenle";
+  static String communityDelete = "Topluluğu Sil";
   static String description = "Açıklama";
   static String communityName = "Topluluk Adı";
   static String addPhotograph = "Fotoğraf Ekle";
@@ -58,6 +66,8 @@ class Texts{
   static String eventName = "Etkinlik Adı";
   static String pickDate = "Tarih seçin.";
   static String pickStartDate = "Başlangıç tarihi seçin.";
+  static String pickStartTime = "Başlangıç zamanını seçin.";
+  static String pickEndTime = "Bitiş zamanını seçin.";
   static String pickEndDate = "Bitiş tarihi seçin.";
   static String online = "Online";
   static String create = "Oluştur";

@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:event_app/Components/ButtonWithIcon.dart';
@@ -70,6 +71,7 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    getPrefs();
   }
 
   getPrefs() async{
@@ -164,7 +166,7 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
                           participationTypeId: int.parse(participationTypeDropdownValue),
                           onlineLink: isOnline ? onlineLink.text : "null",
                           interestId: int.parse(interestDropdownValue)
-                        ), eventImage
+                        ), _preferences.getInt('sessionUserId'), eventImage
                       );
                     }
                     else{
@@ -515,7 +517,7 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
             if(!snapshot.hasData || snapshot.data.data.isEmpty) return Center(child: Text("Henüz bir toplulukta yetkiniz bulunmuyor.", style: TextStyle(color: Colors.black),));
 
             List<UserCommunityRole> userCommunityRoleList = snapshot.data.data;
-            userCommunityRoleDropdownValue = oldUserCommunityRoleDropdownValue == userCommunityRoleList.first.id.toString() ? userCommunityRoleDropdownValue : userCommunityRoleList.first.id.toString();
+            userCommunityRoleDropdownValue = oldUserCommunityRoleDropdownValue == userCommunityRoleList.first.community.id.toString() ? userCommunityRoleDropdownValue : userCommunityRoleList.first.community.id.toString();
 
             return DropdownButtonHideUnderline(
               child: DropdownButton<String>(
@@ -539,11 +541,12 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
                     userCommunityRoleDropdownValue = newValue;
                   });
                 },
-                items: userCommunityRoleList.map((UserCommunityRole map) {
+                items: userCommunityRoleList.map((UserCommunityRole item) {
                   return DropdownMenuItem<String>(
-                    value: "${map.community.id}",
+                    key: UniqueKey(),
+                    value: item.community.id.toString(),
                     child: Text(
-                      map.community.name,
+                      item.community.name,
                       style: const TextStyle(
                           color: Colors.white
                       ),

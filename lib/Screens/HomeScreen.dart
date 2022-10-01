@@ -383,7 +383,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Icon(FontAwesomeIcons.bookmark, color: Color(0xffF0635A), size: 22,)
               ],
               cardOnTap: (){
-                Navigator.pushNamed(context, eventDetailRoute, arguments: item);
+                Navigator.pushNamed(context, eventDetailRoute, arguments: item).then((value) => setState((){}));
               },
             );
           },
@@ -417,7 +417,7 @@ class _HomeScreenState extends State<HomeScreen> {
               address: "${item.city.name}, ${item.country.name}",
               description: "Kuruluş: ${DateFormat("d MMMM, yyyy","tr_TR").format(item.createdAt)}",
               cardOnTap: (){
-                Navigator.pushNamed(context, communityRoute, arguments: item);
+                Navigator.pushNamed(context, communityRoute, arguments: item).then((value) => setState((){}));
               },
             );
           },

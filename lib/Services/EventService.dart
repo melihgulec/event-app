@@ -144,7 +144,7 @@ NetworkImage GetEventImage(int eventId){
   return NetworkImage(requestUri);
 }
 
-void CreateEvent(EventCreateDto event, File image) async{
+void CreateEvent(EventCreateDto event, int userId, File image) async{
   String requestUri = "${api.BaseURL}/events?"
       "name=${event.name}&"
       "description=${event.description}&"
@@ -161,6 +161,7 @@ void CreateEvent(EventCreateDto event, File image) async{
       "participationTypeId=${event.participationTypeId}&"
       "cityId=${event.cityId}&"
       "countryId=${event.countryId}&"
+      "userID=${userId}&"
       "interestId=${event.interestId}";
 
   print(requestUri);

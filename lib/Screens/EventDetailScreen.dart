@@ -103,7 +103,7 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
               return IconButton(
                 icon: Icon(Icons.edit),
                 onPressed: (){
-                  Navigator.pushNamed(context, eventEditRoute, arguments: widget.event);
+                  Navigator.pushNamed(context, eventEditRoute, arguments: widget.event).then((value) => setState((){}));
                 },
               );
             }
