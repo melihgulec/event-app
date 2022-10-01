@@ -29,7 +29,36 @@ Future<UserEventRoleBase> GetRequestUserEventRoles(String requestUri) async{
   }
 }
 
+Future<UserEventRoleBase> PostRequestUserEventRoles(String requestUri) async{
+  SharedPreferences _preferences = await SharedPreferences.getInstance();
+  String token = _preferences.getString("apiToken");
+
+  final response = await http.post(
+      Uri.parse(requestUri),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization" : "Bearer $token"
+      },
+  );
+
+  var body = jsonDecode(response.body);
+
+  if(response.statusCode == 200){
+    ToastHelper().makeToastMessage(body['message']);
+  }else if(response.statusCode == 401){
+    ToastHelper().makeToastMessage(Texts.notAuthorized);
+  }else{
+    ToastHelper().makeToastMessage(body['message']);
+    print("UserEventsRoleService, ${response.statusCode}");
+  }
+}
+
 Future<UserEventRoleBase> GetEventRoles(int eventId) async{
   String requestUri = "${api.BaseURL}/user-event-roles/$eventId";
   return GetRequestUserEventRoles(requestUri);
+}
+
+Future<UserEventRoleBase> PostEventRole(int eventId, String userEmail, int roleId) async{
+  String requestUri = "${api.BaseURL}/user-event-roles/${eventId}/user/${userEmail}/role/${roleId}";
+  return PostRequestUserEventRoles(requestUri);
 }

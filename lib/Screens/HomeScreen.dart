@@ -295,7 +295,6 @@ class _HomeScreenState extends State<HomeScreen> {
               address: "${item.city.name}, ${item.country.name}",
               description: item.eventType.name,
               hasFirstBlurredContainer: true,
-              hasSecondBlurredContainer: true,
               secondBlurredContainerOnTap: (){
 
               },
@@ -357,7 +356,6 @@ class _HomeScreenState extends State<HomeScreen> {
               address: "${item.city.name}, ${item.country.name}",
               description: item.eventType.name,
               hasFirstBlurredContainer: true,
-              hasSecondBlurredContainer: true,
               secondBlurredContainerOnTap: (){
                 print("second");
               },
@@ -378,9 +376,6 @@ class _HomeScreenState extends State<HomeScreen> {
                         color: Color(0xffF0635A)
                     )
                 ),
-              ],
-              secondBlurredContainer: const [
-                Icon(FontAwesomeIcons.bookmark, color: Color(0xffF0635A), size: 22,)
               ],
               cardOnTap: (){
                 Navigator.pushNamed(context, eventDetailRoute, arguments: item).then((value) => setState((){}));

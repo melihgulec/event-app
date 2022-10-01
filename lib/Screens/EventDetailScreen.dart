@@ -106,9 +106,10 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
       title: Text(Texts.eventDetails),
       actions: [
         if(isAuthorizedRoute) IconButton(
-          icon: Icon(Icons.edit),
+          icon: Icon(Icons.settings),
           onPressed: (){
-            Navigator.pushNamed(context, eventEditRoute, arguments: widget.event).then((value) => setState((){}));
+            Navigator.pushNamed(context, eventSettingsRoute, arguments: widget.event).then((value) => setState((){}));
+            //Navigator.pushNamed(context, eventEditRoute, arguments: widget.event).then((value) => setState((){}));
           },
         )
       ],

@@ -16,10 +16,13 @@ class Texts{
   static String myProfile = "Profilim";
   static String messages = "Mesajlar";
   static String events = "Etkinlikler";
+  static String eventSettings = "Etkinlik Ayarları";
   static String editEvent = "Etkinliği Düzenle";
+  static String setAuthorize = "Yetkiler";
   static String deleteEvent = "Etkinliği Sil";
   static String add = "Ekle";
   static String edit = "Düzenle";
+  static String save = "Kaydet";
   static String send = "Gönder";
   static String createSchedule = "Akış Oluştur";
   static String editSchedule = "Akışı Düzenle";
@@ -77,4 +80,6 @@ class Texts{
   static String create = "Oluştur";
   static String onlineLink = "Link";
   static String stopFollowing = "Takibi Bırak";
+  static String success = "Başarılı";
+  static String eventAuthorizationScreenDescription = "Kullanıcılara yetki atamak için aşağıdaki bölümlerin doldurulması gereklidir.";
 }
