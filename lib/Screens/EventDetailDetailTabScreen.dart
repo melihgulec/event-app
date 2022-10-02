@@ -48,7 +48,7 @@ class _EventDetailDetailTabScreenState extends State<EventDetailDetailTabScreen>
             WhiteSpaceVertical(),
             ItemTileWithIcon(
               title: DateFormat("d MMMM, yyyy","tr_TR").format(widget.event.startDate),
-              subtitle: DateFormat("EEEE, H:mm:ss", "tr_TR").format(widget.event.startDate),
+              subtitle: DateFormat("EEEE", "tr_TR").format(widget.event.startDate),
               icon: FaIcon(FontAwesomeIcons.calendar),
             ),
             WhiteSpaceVertical(),

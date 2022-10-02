@@ -1,3 +1,5 @@
+import 'package:event_app/Screens/CommunitySettingsScreen.dart';
+import 'package:event_app/Screens/CommunityUserAuthorizationScreen.dart';
 import 'package:event_app/Screens/CreateEventScheduleScreen.dart';
 import 'package:event_app/Screens/EditCommunityScreen.dart';
 import 'package:event_app/Screens/EditEventScheduleScreen.dart';
@@ -40,6 +42,8 @@ class Router{
       case editEventScheduleRoute: return MaterialPageRoute(builder: (context) => EditEventScheduleScreen(eventSchedule: args[0], event: args[1],));
       case eventSettingsRoute: return MaterialPageRoute(builder: (context) => EventSettingsScreen(event: settings.arguments));
       case eventUserAuthorizationRoute: return MaterialPageRoute(builder: (context) => EventUserAuthorizationScreen(event: settings.arguments));
+      case communitySettingsRoute: return MaterialPageRoute(builder: (context) => CommunitySettingsScreen(community: settings.arguments));
+      case communityUserAuthorizationRoute: return MaterialPageRoute(builder: (context) => CommunityUserAuthorizationScreen(community: settings.arguments));
       case interestsRoute: return MaterialPageRoute(builder: (context) => InterestsScreen());
       case eventsListRoute: return MaterialPageRoute(builder: (context) => EventsListScreen(interest: settings.arguments,));
       case userProfileRoute: return MaterialPageRoute(builder: (context) => ProfileScreen(user: settings.arguments,));

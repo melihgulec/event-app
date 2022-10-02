@@ -44,7 +44,7 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
 
     var isUserAuthorized = userEventRole.where((element) => element.user.id == _preferences.getInt("sessionUserId"));
 
-    if(isUserAuthorized.length > 0 && (isUserAuthorized.first.role.id == RolesEnum.toplulukYoneticisi.name || isUserAuthorized.first.role.id == RolesEnum.organizator.name)){
+    if(isUserAuthorized.length > 0 && (isUserAuthorized.first.role.id == RolesEnum.yonetici.name || isUserAuthorized.first.role.id == RolesEnum.organizator.name)){
       setState(() {
         isAuthorizedRoute = true;
       });

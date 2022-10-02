@@ -21,3 +21,5 @@ const createEventScheduleRoute = "createEventSchedule";
 const editEventScheduleRoute = "editEventSchedule";
 const eventSettingsRoute = "eventSettings";
 const eventUserAuthorizationRoute = "eventUserAuthorization";
+const communitySettingsRoute = "communitySettings";
+const communityUserAuthorizationRoute = "communityUserAuthorization";

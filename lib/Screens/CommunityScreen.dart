@@ -27,17 +27,32 @@ class CommunityScreen extends StatefulWidget {
 
 class _CommunityScreenState extends State<CommunityScreen> {
   SharedPreferences _preferences;
+  bool isAuthorizedRoute = false;
 
-  Future<SharedPreferences> getPrefs() async{
+  getPrefs() async{
     _preferences = await SharedPreferences.getInstance();
-    return _preferences;
   }
 
   @override
   void initState() {
-    getPrefs();
     // TODO: implement initState
     super.initState();
+    UserAuthorizeControl();
+  }
+
+  Future UserAuthorizeControl() async{
+    await getPrefs();
+
+    UserCommunityRoleBase userCommunityRoleBase = await GetAllUserCommunityRoles(_preferences.getInt("sessionUserId"));
+    List<UserCommunityRole> userCommunityRole = userCommunityRoleBase.data;
+
+    var isUserAuthorized = userCommunityRole.where((element) => element.user.id == _preferences.getInt("sessionUserId"));
+
+    if(isUserAuthorized.length > 0 && (isUserAuthorized.first.role.id == RolesEnum.yonetici.name || isUserAuthorized.first.role.id == RolesEnum.organizator.name)){
+      setState(() {
+        isAuthorizedRoute = true;
+      });
+    }
   }
 
   @override
@@ -103,32 +118,10 @@ class _CommunityScreenState extends State<CommunityScreen> {
       pinned: true,
       title: Text(Texts.community),
       actions: [
-        FutureBuilder(
-          future: getPrefs(),
-          builder: (context, snapshot_){
-            if(!snapshot_.hasData) return const CircularProgressIndicator();
-
-            return FutureBuilder<UserCommunityRoleBase>(
-              future: GetAllUserCommunityRoles(_preferences.getInt("sessionUserId")),
-              builder: (BuildContext context, AsyncSnapshot<UserCommunityRoleBase> snapshot){
-                if(!snapshot.hasData) return const CircularProgressIndicator();
-
-                List<UserCommunityRole> roles = snapshot.data.data;
-
-                var isUserAuthorized = roles.where((element) => element.user.id == _preferences.getInt("sessionUserId") && element.community.id == widget.community.id);
-
-                if(isUserAuthorized.length > 0 && (isUserAuthorized.first.role.id == RolesEnum.toplulukYoneticisi.name || isUserAuthorized.first.role.id == RolesEnum.organizator.name)){
-                  return IconButton(
-                    icon: Icon(Icons.edit),
-                    onPressed: (){
-                      Navigator.pushNamed(context, communityEditRoute, arguments: widget.community);
-                    }
-                  );
-                }
-
-                return Text('');
-              },
-            );
+        if(isAuthorizedRoute) IconButton(
+          icon: Icon(Icons.settings),
+          onPressed: (){
+            Navigator.pushNamed(context, communitySettingsRoute, arguments: widget.community);
           },
         )
       ],

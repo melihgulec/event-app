@@ -1,5 +1,5 @@
 enum RolesEnum {
-  toplulukYoneticisi,
+  yonetici,
   organizator,
   konusmaci
 }
@@ -7,7 +7,7 @@ enum RolesEnum {
 extension RolesEnumExtension on RolesEnum {
   int get name {
     switch (this) {
-      case RolesEnum.toplulukYoneticisi:
+      case RolesEnum.yonetici:
         return 1;
       case RolesEnum.organizator:
         return 2;

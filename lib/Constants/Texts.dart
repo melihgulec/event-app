@@ -24,6 +24,7 @@ class Texts{
   static String edit = "Düzenle";
   static String save = "Kaydet";
   static String send = "Gönder";
+  static String editCommunity = "Topluluğu Düzenle";
   static String createSchedule = "Akış Oluştur";
   static String editSchedule = "Akışı Düzenle";
   static String schedulesNotFound = "Akış bilgisi bulunamadı.";
@@ -42,6 +43,7 @@ class Texts{
   static String eventDetails = "Etkinlik Detayları";
   static String details = "DETAYLAR";
   static String sponsors = "SPONSORLAR";
+  static String communitySettings = "Topluluk Ayarları";
   static String shares = "PAYLAŞIMLAR";
   static String eventAddress = "Etkinlik Adresi";
   static String communityOrganizingTheEvent = "Düzenleyen Topluluk";
@@ -82,4 +84,5 @@ class Texts{
   static String stopFollowing = "Takibi Bırak";
   static String success = "Başarılı";
   static String eventAuthorizationScreenDescription = "Kullanıcılara yetki atamak için aşağıdaki bölümlerin doldurulması gereklidir.";
+  static String communityAuthorizationScreenDescription = "Kullanıcılara yetki atamak için aşağıdaki bölümlerin doldurulması gereklidir.";
 }

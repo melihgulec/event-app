@@ -24,7 +24,31 @@ Future<UserCommunityRoleBase> GetRequestUserCommunityRoles(String requestUri) as
   }else if(response.statusCode == 401){
     ToastHelper().makeToastMessage(Texts.notAuthorized);
   }else{
-    print("LanguageService, ${response.statusCode}");
+    print("UserCommunityRoleService, ${response.statusCode}");
+  }
+}
+
+Future<UserCommunityRoleBase> PostRequestUserCommunityRoles(String requestUri) async{
+  SharedPreferences _preferences = await SharedPreferences.getInstance();
+  String token = _preferences.getString("apiToken");
+
+  final response = await http.post(
+    Uri.parse(requestUri),
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization" : "Bearer $token"
+    },
+  );
+
+  var body = jsonDecode(response.body);
+
+  if(response.statusCode == 200){
+    ToastHelper().makeToastMessage(body['message']);
+  }else if(response.statusCode == 401){
+    ToastHelper().makeToastMessage(Texts.notAuthorized);
+  }else{
+    ToastHelper().makeToastMessage(body['message']);
+    print("UserCommunityRoleService, ${response.statusCode}");
   }
 }
 
@@ -42,3 +66,8 @@ Future<UserCommunityRoleBase> GetAllUserCommunityRolesByCommunity(int communityI
   String requestUri = "${api.BaseURL}/user-community-roles/community/$communityId";
   return GetRequestUserCommunityRoles(requestUri);
 }
+Future<UserCommunityRoleBase> PostCommunityRole(int communityId, String userEmail, int roleId) async{
+  String requestUri = "${api.BaseURL}/user-community-roles/${communityId}/user/${userEmail}/role/${roleId}";
+  return PostRequestUserCommunityRoles(requestUri);
+}
+
