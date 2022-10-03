@@ -23,3 +23,4 @@ const eventSettingsRoute = "eventSettings";
 const eventUserAuthorizationRoute = "eventUserAuthorization";
 const communitySettingsRoute = "communitySettings";
 const communityUserAuthorizationRoute = "communityUserAuthorization";
+const addEventSponsorRoute = "addEventSponsor";

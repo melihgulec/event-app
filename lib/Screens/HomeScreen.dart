@@ -136,6 +136,7 @@ class _HomeScreenState extends State<HomeScreen> {
           DrawerHeaderItem(context, FontAwesomeIcons.userGroup, Texts.communities, () => Navigator.pushNamed(context, communityListRoute)),
           DrawerHeaderItem(context, FontAwesomeIcons.userPlus, Texts.createCommunity, () => Navigator.pushNamed(context, createCommunityRoute).then((value) => setState((){}))),
           DrawerHeaderItem(context, FontAwesomeIcons.heart, Texts.areasOfInterest, () => Navigator.pushNamed(context, interestsRoute)),
+          DrawerHeaderItem(context, FontAwesomeIcons.building, Texts.companies, () => Navigator.pushNamed(context, interestsRoute)),
           //DrawerHeaderItem(context, FontAwesomeIcons.bookmark, Texts.favorites, (){}),
           //DrawerHeaderItem(context, FontAwesomeIcons.wrench, Texts.settings, (){}),
           DrawerHeaderItem(context, FontAwesomeIcons.minus, Texts.logout, () => Navigator.popAndPushNamed(context, loginRoute)),

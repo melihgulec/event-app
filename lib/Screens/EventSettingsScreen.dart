@@ -23,6 +23,10 @@ class _EventSettingsScreenState extends State<EventSettingsScreen> {
     Navigator.pushNamed(context, eventUserAuthorizationRoute, arguments: widget.event).then((value) => setState((){}));
   }
 
+  void navigateAddEventSponsorScreen(){
+    Navigator.pushNamed(context, addEventSponsorRoute, arguments: widget.event).then((value) => setState((){}));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,6 +46,14 @@ class _EventSettingsScreenState extends State<EventSettingsScreen> {
               onTap: navigateUserAuthorizationScreen,
               leading: Icon(Icons.key, color: Colors.white,),
               title: Text(Texts.setAuthorize),
+            ),
+          ),
+          WhiteSpaceVertical(),
+          Card(
+            child: ListTile(
+              onTap: navigateAddEventSponsorScreen,
+              leading: Icon(Icons.domain, color: Colors.white,),
+              title: Text(Texts.addEventSponsor),
             ),
           ),
         ],

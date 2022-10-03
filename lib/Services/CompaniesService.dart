@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:event_app/Constants/Texts.dart';
 import 'package:event_app/Helpers/ToastHelper.dart';
+import 'package:event_app/Models/Company.dart';
 import 'package:event_app/Models/CompanySponsorships.dart';
 import 'package:flutter/material.dart';
 import 'package:event_app/Constants/API.dart' as api;
@@ -29,6 +30,27 @@ Future<CompanySponsorshipsBase> GetRequestCompanySponsorships(String requestUri)
   }
 }
 
+Future<CompanyBase> GetRequestCompanies(String requestUri) async{
+  SharedPreferences _preferences = await SharedPreferences.getInstance();
+  String token = _preferences.getString("apiToken");
+
+  final response = await http.get(
+      Uri.parse(requestUri),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization" : "Bearer $token"
+      }
+  );
+
+  if(response.statusCode == 200){
+    return CompanyBase.fromJson(jsonDecode(response.body));
+  }else if(response.statusCode == 401){
+    ToastHelper().makeToastMessage(Texts.notAuthorized);
+  }else{
+    print("CommunitiesService, ${response.statusCode}");
+  }
+}
+
 Future<CompanySponsorshipsBase> GetCompanySponsorships(int companyId) async{
   String requestUri = "${api.BaseURL}/companies/$companyId/sponsored-events";
   return GetRequestCompanySponsorships(requestUri);
@@ -37,4 +59,9 @@ Future<CompanySponsorshipsBase> GetCompanySponsorships(int companyId) async{
 NetworkImage GetCompanyImage(int companyId){
   String requestUri = "${api.BaseURL}/companies/$companyId/image";
   return NetworkImage(requestUri);
+}
+
+Future<CompanyBase> GetCompanies() async{
+  String requestUri = "${api.BaseURL}/companies";
+  return GetRequestCompanies(requestUri);
 }

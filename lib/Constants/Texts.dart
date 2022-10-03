@@ -62,6 +62,7 @@ class Texts{
   static String shareYourThoughts = "Düşüncelerini paylaş";
   static String sponsorships = "SPONSORLUKLAR";
   static String company = "Şirket";
+  static String companies = "Şirketler";
   static String about = "Hakkında";
   static String community = "Topluluk";
   static String communitiesNotFound = "Topluluklar bulunamadı.";
@@ -82,6 +83,7 @@ class Texts{
   static String create = "Oluştur";
   static String onlineLink = "Link";
   static String stopFollowing = "Takibi Bırak";
+  static String addEventSponsor = "Sponsor Ekle";
   static String success = "Başarılı";
   static String eventAuthorizationScreenDescription = "Kullanıcılara yetki atamak için aşağıdaki bölümlerin doldurulması gereklidir.";
   static String communityAuthorizationScreenDescription = "Kullanıcılara yetki atamak için aşağıdaki bölümlerin doldurulması gereklidir.";
