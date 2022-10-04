@@ -90,6 +90,28 @@ class _EventDetailDetailTabScreenState extends State<EventDetailDetailTabScreen>
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
+                  Texts.questions,
+                  style: Theme.of(context).textTheme.headline5,
+                ),
+                ElevatedButton(
+                  child: Row(
+                    children: [
+                      Text(Texts.all, style: TextStyle(color: Colors.white)),
+                      SizedBox(width:  10,),
+                      FaIcon(FontAwesomeIcons.chevronRight, size: 12, color: Colors.white,),
+                    ],
+                  ),
+                  onPressed: (){
+                    Navigator.pushNamed(context, eventQuestionListRoute, arguments: widget.event);
+                  },
+                )
+              ],
+            ),
+            WhiteSpaceVertical(factor: 6),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
                   Texts.eventFlow,
                   style: Theme.of(context).textTheme.headline5,
                 ),
@@ -134,7 +156,8 @@ class _EventDetailDetailTabScreenState extends State<EventDetailDetailTabScreen>
                   },
                 );
               },
-            )
+            ),
+
           ],
         ),
       ),

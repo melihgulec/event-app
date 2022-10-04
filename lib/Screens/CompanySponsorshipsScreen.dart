@@ -16,30 +16,35 @@ class CompanySponsorshipsScreen extends StatelessWidget {
     this.company
   }) : super(key: key);
 
+  EdgeInsets pagePadding = EdgeInsets.all(8.0);
+
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: GetCompanySponsorships(company.id),
-      builder: (BuildContext context, AsyncSnapshot<CompanySponsorshipsBase> snapshot){
-        if(!snapshot.hasData) return Center(child: CircularProgressIndicator());
+    return Padding(
+      padding: pagePadding,
+      child: FutureBuilder(
+        future: GetCompanySponsorships(company.id),
+        builder: (BuildContext context, AsyncSnapshot<CompanySponsorshipsBase> snapshot){
+          if(!snapshot.hasData) return Center(child: CircularProgressIndicator());
 
-        List<Datum> eventList = snapshot.data.data;
+          List<Datum> eventList = snapshot.data.data;
 
-        return ListView.separated(
-          separatorBuilder: (context, index) => WhiteSpaceVertical(factor: 3,),
-          itemCount: eventList.length,
-          itemBuilder: (context, index){
-            Event item = eventList[index].event;
-            return ItemTileWithImage(
-              image: GetEventImage(item.id),
-              description: item.name,
-              onTap: (){
-                Navigator.pushNamed(context, eventDetailRoute, arguments: item);
-              },
-            );
-          },
-        );
-      },
+          return ListView.separated(
+            separatorBuilder: (context, index) => WhiteSpaceVertical(factor: 3,),
+            itemCount: eventList.length,
+            itemBuilder: (context, index){
+              Event item = eventList[index].event;
+              return ItemTileWithImage(
+                image: GetEventImage(item.id),
+                description: item.name,
+                onTap: (){
+                  Navigator.pushNamed(context, eventDetailRoute, arguments: item);
+                },
+              );
+            },
+          );
+        },
+      ),
     );
   }
 }

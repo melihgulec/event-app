@@ -24,3 +24,5 @@ const eventUserAuthorizationRoute = "eventUserAuthorization";
 const communitySettingsRoute = "communitySettings";
 const communityUserAuthorizationRoute = "communityUserAuthorization";
 const addEventSponsorRoute = "addEventSponsor";
+const companiesListRoute = "companies";
+const eventQuestionListRoute = "eventQuestionList";

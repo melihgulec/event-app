@@ -26,7 +26,8 @@ Future<CompanySponsorshipsBase> GetRequestCompanySponsorships(String requestUri)
   }else if(response.statusCode == 401){
     ToastHelper().makeToastMessage(Texts.notAuthorized);
   }else{
-    print("CommunitiesService, ${response.statusCode}");
+    print(response.body);
+    print("CompaniesService, ${response.statusCode}");
   }
 }
 

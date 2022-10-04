@@ -76,6 +76,8 @@ class _EventsListScreenState extends State<EventsListScreen> {
 
         List<Event> eventList = snapshot.data.data;
 
+        if(eventList.isEmpty) return Center(child: Text(Texts.eventsNotFound),);
+
         return ListView.separated(
           separatorBuilder: (context, index){
             return SizedBox(height: 25,);

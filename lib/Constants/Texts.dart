@@ -22,6 +22,7 @@ class Texts{
   static String deleteEvent = "Etkinliği Sil";
   static String add = "Ekle";
   static String edit = "Düzenle";
+  static String delete = "Sil";
   static String save = "Kaydet";
   static String send = "Gönder";
   static String editCommunity = "Topluluğu Düzenle";
@@ -85,6 +86,10 @@ class Texts{
   static String stopFollowing = "Takibi Bırak";
   static String addEventSponsor = "Sponsor Ekle";
   static String success = "Başarılı";
+  static String questions = "Sorular";
+  static String sendYourQuestion = "Sorunu gönder.";
+  static String editYourQuestion = "Sorunu düzenle.";
+  static String questionsNotFound = "Etkinliğe ait soru bulunamadı.";
   static String eventAuthorizationScreenDescription = "Kullanıcılara yetki atamak için aşağıdaki bölümlerin doldurulması gereklidir.";
   static String communityAuthorizationScreenDescription = "Kullanıcılara yetki atamak için aşağıdaki bölümlerin doldurulması gereklidir.";
 }
